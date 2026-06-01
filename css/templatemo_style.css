@@ -491,10 +491,9 @@ h2.resp-accordion { color: #ffffff; }
 }
 
 /*======================================================================
-    HORIZONTAL IMMERSIVE OVERLAY READER SYSTEM (BOOK VERSION 2.0)
+    HORIZONTAL IMMERSIVE OVERLAY READER SYSTEM (PAGE FLIP VERSION)
 ======================================================================*/
 
-/* Main full-screen modal background wrap */
 #story-reader {
     position: fixed !important;
     top: 0 !important;
@@ -512,7 +511,6 @@ h2.resp-accordion { color: #ffffff; }
     -webkit-font-smoothing: antialiased;
 }
 
-/* Centralized containment track row layout */
 #story-reader .container {
     width: 100% !important;
     max-width: 100% !important;
@@ -531,7 +529,7 @@ h2.resp-accordion { color: #ffffff; }
     align-items: center !important;
 }
 
-/* The frame clipping container */
+/* Centralized 3D perspective viewport context */
 .nick-story-scroller-container {
     width: 90vw !important;  
     max-width: 1050px !important; 
@@ -540,47 +538,46 @@ h2.resp-accordion { color: #ffffff; }
     border: 1px solid #D1B200;
     overflow: hidden !important; 
     position: relative;
-    background: #1a1a1a;
+    background: #111111;
     box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8);
+    perspective: 1500px; /* Essential feature hook for authentic 3D transforms */
 }
 
+/* Stacks pages neatly on top of each other */
 .nick-story-content-track {
-    display: flex !important;
-    flex-wrap: nowrap !important;
+    position: relative !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.story-instance-data {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
     height: 100% !important;
 }
 
 .nick-story-section {
+    position: relative !important;
+    width: 100% !important;
     height: 100% !important;
-    display: flex !important;
-    flex-direction: row !important; 
-    flex-wrap: nowrap !important;
-    will-change: transform; 
 }
 
-/* =====================================================================
-    DYNAMIC BOOK PAGE PANELS (Responsive Grid Scaling)
-===================================================================== */
-
-/* Individual structural sliding page node */
+/* Individual full stacked book pages */
 .nick-page-panel {
-    flex: 0 0 90vw !important;
-    width: 90vw !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
     height: 100% !important;
-    display: block !important;
     background: #1a1a1a;
     box-sizing: border-box !important;
+    transform-origin: left center; /* Hinges page flips exactly like a book spine */
+    z-index: 1;
 }
 
-/* Scale gracefully up to match crisp desktop container layouts */
-@media(min-width: 992px) {
-    .nick-page-panel {
-        flex: 0 0 1050px !important; 
-        width: 1050px !important;
-    }
-}
-
-/* --- PAGE MODEL A: COVER PAGES --- */
+/* --- COVER PAGE STYLING --- */
 .nick-page-panel.cover-page {
     background: #111111;
 }
@@ -594,10 +591,10 @@ h2.resp-accordion { color: #ffffff; }
 .story-full-image-box img {
     width: 100% !important;
     height: 100% !important;
-    object-fit: cover !important; /* Crops cleanly to eliminate visual borders */
+    object-fit: cover !important;
 }
 
-/* --- PAGE MODEL B: PURE TEXT CHAPTER PAGES --- */
+/* --- TEXT CHAPTER PAGES STYLING --- */
 .nick-page-panel.text-page {
     background: #1e1e1e;
 }
@@ -608,18 +605,16 @@ h2.resp-accordion { color: #ffffff; }
     padding: 35px 40px !important;
     background: #1e1e1e;
     box-sizing: border-box !important;
-    overflow-y: auto !important; /* Self-contains long scrolling book updates */
+    overflow-y: auto !important; 
     overflow-x: hidden !important;
 }
 
-/* Desktop layout breathing space */
 @media(min-width: 768px) {
     .story-full-text-box {
         padding: 55px 75px !important;
     }
 }
 
-/* Elegant Text Typography Layout */
 .story-full-text-box h3 {
     font-size: 1.75rem !important;
     font-weight: 400 !important;
@@ -629,7 +624,6 @@ h2.resp-accordion { color: #ffffff; }
     text-align: left !important;
     border-bottom: 1px solid rgba(209, 178, 0, 0.15);
     padding-bottom: 12px;
-    letter-spacing: 0.5px;
 }
 
 .story-full-text-box p {
@@ -640,7 +634,7 @@ h2.resp-accordion { color: #ffffff; }
     text-align: justify;
 }
 
-/* Elegant Premium Scrollbar Customizer inside long book pages */
+/* Scrollbar styling */
 .story-full-text-box::-webkit-scrollbar {
     width: 6px;
     background-color: #1e1e1e;
@@ -651,10 +645,7 @@ h2.resp-accordion { color: #ffffff; }
     border-radius: 10px;
 }
 
-/* =====================================================================
-    UI CONTROLS & UTILITIES
-===================================================================== */
-
+/* --- FOOTER & UI BUTTON --- */
 #story-reader .row {
     width: 100% !important;
     margin: 30px 0 0 0 !important;
@@ -667,14 +658,13 @@ h2.resp-accordion { color: #ffffff; }
     width: auto !important;
 }
 
-/* Interactive Close Button */
 #close-story-reader {
     padding: 12px 35px !important;
     font-size: 12px !important;
     font-weight: 600 !important;
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    border-radius: 0px !important; /* Follows the site's flat aesthetic */
+    border-radius: 0px !important;
     border: 1px solid #D1B200 !important;
     background: transparent !important;
     color: #D1B200 !important;
