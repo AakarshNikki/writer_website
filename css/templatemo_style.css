@@ -490,27 +490,29 @@ h2.resp-accordion { color: #ffffff; }
     }
 }
 
-/*======================================================
-    HORIZONTAL IMMERSIVE OVERLAY READER SYSTEM (BOOK VERSION)
-========================================================*/
+/*======================================================================
+    HORIZONTAL IMMERSIVE OVERLAY READER SYSTEM (BOOK VERSION 2.0)
+======================================================================*/
 
+/* Main full-screen modal background wrap */
 #story-reader {
     position: fixed !important;
     top: 0 !important;
     left: 0 !important;
     width: 100vw !important;
     height: 100vh !important;
-    background-color: rgba(18, 18, 18, 0.99) !important; 
+    background-color: rgba(14, 14, 14, 0.98) !important; 
     z-index: 999999 !important; 
     margin: 0 !important;
     padding: 0 !important;
-    
     display: none; 
     flex-direction: column !important;
     justify-content: center !important;
     align-items: center !important;
+    -webkit-font-smoothing: antialiased;
 }
 
+/* Centralized containment track row layout */
 #story-reader .container {
     width: 100% !important;
     max-width: 100% !important;
@@ -529,16 +531,17 @@ h2.resp-accordion { color: #ffffff; }
     align-items: center !important;
 }
 
+/* The frame clipping container */
 .nick-story-scroller-container {
-    width: 85vw !important;  
-    max-width: 1000px !important; 
-    height: 60vh !important;
-    max-height: 520px !important;
+    width: 90vw !important;  
+    max-width: 1050px !important; 
+    height: 70vh !important;
+    max-height: 580px !important;
     border: 1px solid #D1B200;
     overflow: hidden !important; 
     position: relative;
     background: #1a1a1a;
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8);
 }
 
 .nick-story-content-track {
@@ -555,64 +558,106 @@ h2.resp-accordion { color: #ffffff; }
     will-change: transform; 
 }
 
+/* =====================================================================
+    DYNAMIC BOOK PAGE PANELS (Responsive Grid Scaling)
+===================================================================== */
+
+/* Individual structural sliding page node */
 .nick-page-panel {
-    flex: 0 0 85vw !important;
-    width: 85vw !important;
+    flex: 0 0 90vw !important;
+    width: 90vw !important;
     height: 100% !important;
-    display: flex !important;
-    flex-direction: row !important;
-    flex-wrap: nowrap !important;
+    display: block !important;
     background: #1a1a1a;
+    box-sizing: border-box !important;
 }
 
+/* Scale gracefully up to match crisp desktop container layouts */
 @media(min-width: 992px) {
     .nick-page-panel {
-        flex: 0 0 1000px !important; 
-        width: 1000px !important;
+        flex: 0 0 1050px !important; 
+        width: 1050px !important;
     }
 }
 
-.story-image-box {
-    flex: 0 0 50% !important;
-    width: 50% !important;
+/* --- PAGE MODEL A: COVER PAGES --- */
+.nick-page-panel.cover-page {
+    background: #111111;
+}
+
+.story-full-image-box {
+    width: 100% !important;
     height: 100% !important;
     overflow: hidden;
 }
 
-.story-image-box img {
+.story-full-image-box img {
     width: 100% !important;
     height: 100% !important;
-    object-fit: cover !important;
+    object-fit: cover !important; /* Crops cleanly to eliminate visual borders */
 }
 
-.story-text-box {
-    flex: 0 0 50% !important;
-    width: 50% !important;
+/* --- PAGE MODEL B: PURE TEXT CHAPTER PAGES --- */
+.nick-page-panel.text-page {
+    background: #1e1e1e;
+}
+
+.story-full-text-box {
+    width: 100% !important;
     height: 100% !important;
-    padding: 45px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: center !important;
-    align-items: flex-start !important;
-    background: #222222;
+    padding: 35px 40px !important;
+    background: #1e1e1e;
+    box-sizing: border-box !important;
+    overflow-y: auto !important; /* Self-contains long scrolling book updates */
+    overflow-x: hidden !important;
 }
 
-.story-text-box h3 {
-    font-size: 1.6rem !important;
+/* Desktop layout breathing space */
+@media(min-width: 768px) {
+    .story-full-text-box {
+        padding: 55px 75px !important;
+    }
+}
+
+/* Elegant Text Typography Layout */
+.story-full-text-box h3 {
+    font-size: 1.75rem !important;
+    font-weight: 400 !important;
     color: #D1B200 !important;
-    margin-bottom: 15px !important;
+    margin-top: 0 !important;
+    margin-bottom: 25px !important;
     text-align: left !important;
+    border-bottom: 1px solid rgba(209, 178, 0, 0.15);
+    padding-bottom: 12px;
+    letter-spacing: 0.5px;
 }
 
-.story-text-box p {
-    font-size: 1.05rem !important;
-    line-height: 1.75 !important;
-    color: #dddddd !important;
+.story-full-text-box p {
+    font-size: 1.12rem !important;
+    line-height: 1.85 !important;
+    color: #dfdfdf !important;
+    margin-bottom: 22px !important;
+    text-align: justify;
 }
+
+/* Elegant Premium Scrollbar Customizer inside long book pages */
+.story-full-text-box::-webkit-scrollbar {
+    width: 6px;
+    background-color: #1e1e1e;
+}
+
+.story-full-text-box::-webkit-scrollbar-thumb {
+    background-color: #D1B200;
+    border-radius: 10px;
+}
+
+/* =====================================================================
+    UI CONTROLS & UTILITIES
+===================================================================== */
 
 #story-reader .row {
     width: 100% !important;
-    margin: 25px 0 0 0 !important;
+    margin: 30px 0 0 0 !important;
     display: flex !important;
     justify-content: center !important;
 }
@@ -622,14 +667,23 @@ h2.resp-accordion { color: #ffffff; }
     width: auto !important;
 }
 
+/* Interactive Close Button */
 #close-story-reader {
-    padding: 10px 28px !important;
-    font-size: 13px !important;
-    font-weight: bold !important;
+    padding: 12px 35px !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
+    border-radius: 0px !important; /* Follows the site's flat aesthetic */
+    border: 1px solid #D1B200 !important;
+    background: transparent !important;
+    color: #D1B200 !important;
+    transition: all 0.25s ease-in-out;
 }
 
-.gradient-green { background: linear-gradient(135deg, #11998e, #38ef7d); color: #111; }
-.gradient-blue  { background: linear-gradient(135deg, #00c6ff, #0072ff); color: #fff; }
-.gradient-red   { background: linear-gradient(135deg, #cb2d3e, #ef473a); color: #fff; }
+#close-story-reader:hover {
+    background: #D1B200 !important;
+    color: #111111 !important;
+    box-shadow: 0 4px 15px rgba(209, 178, 0, 0.3);
+    cursor: pointer;
+}

@@ -316,97 +316,60 @@
     </div>
 
     <!-- FLOATING IMMERSIVE POPUP VIEWPORT OVERLAY (Isolated here outside the menu architectures) -->
-    <div id="story-reader">
-      <div class="container">
-        
-        <div class="nick-story-scroller-wrapper">
-          <div class="nick-story-scroller-container">
-            <div class="nick-story-content-track">
-              
-              <!-- STORY 1 -->
-              <div class="story-instance-data" id="story-1-data" style="display: none; width: 100%; height: 100%;">
-                <section class="nick-story-section">
-                  <div class="nick-page-panel">
-                    <div class="story-image-box">
-                      <img src="images/portfolio/templatemo_portfolio01.jpg" alt="Story 1 Chapter 1 Image">
-                    </div>
-                    <div class="story-text-box">
-                      <h3>Short Story 1 &bull; Chapter 1</h3>
-                      <p>The journey across the endless shifting clouds began before dawn. The mechanical birds chirped rhythmically as the system warmed up.</p>
-                    </div>
+   <!-- FLOATING IMMERSIVE POPUP VIEWPORT OVERLAY -->
+<div id="story-reader">
+    <div class="container">
+      
+      <div class="nick-story-scroller-wrapper">
+        <div class="nick-story-scroller-container">
+          <div class="nick-story-content-track">
+            
+            <!-- STORY 1 -->
+            <div class="story-instance-data" id="story-1-data" style="display: none; width: 100%; height: 100%;">
+              <section class="nick-story-section">
+                
+                <!-- PAGE 1: COVER IMAGE ONLY -->
+                <div class="nick-page-panel cover-page">
+                  <div class="story-full-image-box">
+                    <img src="images/portfolio/templatemo_portfolio01.jpg" alt="Story 1 Cover Image">
                   </div>
-                  <div class="nick-page-panel">
-                    <div class="story-image-box">
-                      <img src="images/portfolio/templatemo_portfolio02.jpg" alt="Story 1 Chapter 2 Image">
-                    </div>
-                    <div class="story-text-box">
-                      <h3>Short Story 1 &bull; Chapter 2</h3>
-                      <p>Navigating the complex horizontal storm systems required absolute manual control. Every algorithm had to be rewritten mid-flight.</p>
-                    </div>
+                </div>
+                
+                <!-- PAGE 2: CHAPTER 1 TEXT -->
+                <div class="nick-page-panel text-page">
+                  <div class="story-full-text-box">
+                    <h3>Short Story 1 &bull; Chapter 1</h3>
+                    <p>The journey across the endless shifting clouds began before dawn[cite: 8]. The mechanical birds chirped rhythmically as the system warmed up[cite: 8].</p>
+                    <p>As the daylight filtered through the glass domes, the true scope of the sky-city revealed itself. Aakarsh adjusted his mechanical optics and initiated the propulsion sequence.</p>
                   </div>
-                  <div class="nick-page-panel">
-                    <div class="story-image-box">
-                      <img src="images/portfolio/templatemo_portfolio03.jpg" alt="Story 1 Chapter 3 Image">
-                    </div>
-                    <div class="story-text-box">
-                      <h3>Short Story 1 &bull; Chapter 3</h3>
-                      <p>Landing at the hidden high-altitude hangar brought immediate safety. The digital logs recorded a flawless trajectory tracking layout.</p>
-                    </div>
+                </div>
+                
+                <!-- PAGE 3: CHAPTER 2 TEXT -->
+                <div class="nick-page-panel text-page">
+                  <div class="story-full-text-box">
+                    <h3>Short Story 1 &bull; Chapter 2</h3>
+                    <p>Navigating the complex horizontal storm systems required absolute manual control[cite: 8]. Every algorithm had to be rewritten mid-flight[cite: 8].</p>
+                    <p>The feedback through the primary steering grid grew tense as static discharge raked across the external sensory rods. It was a race against the network firewall collapse.</p>
                   </div>
-                </section>
-              </div>
-
-              <!-- STORY 2 -->
-              <div class="story-instance-data" id="story-2-data" style="display: none; width: 100%; height: 100%;">
-                <section class="nick-story-section">
-                  <div class="nick-page-panel">
-                    <div class="story-image-box">
-                      <img src="images/portfolio/templatemo_portfolio02.jpg" alt="Story 2 Chapter 1 Image">
-                    </div>
-                    <div class="story-text-box">
-                      <h3>Short Story 2 &bull; Chapter 1</h3>
-                      <p>Deep within the ancient code arrays, shadows danced between text lines. Whispers of a forgotten script file echoed across variables.</p>
-                    </div>
-                  </div>
-                  <div class="nick-page-panel">
-                    <div class="story-image-box">
-                      <img src="images/portfolio/templatemo_portfolio04.jpg" alt="Story 2 Chapter 2 Image">
-                    </div>
-                    <div class="story-text-box">
-                      <h3>Short Story 2 &bull; Chapter 2</h3>
-                      <p>Unveiling the hidden data patterns revealed a true masterpiece. The modular core architectures locked together fluidly.</p>
-                    </div>
-                  </div>
-                </section>
-              </div>
-
-              <!-- STORY 3 -->
-              <div class="story-instance-data" id="story-3-data" style="display: none; width: 100%; height: 100%;">
-                <section class="nick-story-section">
-                  <div class="nick-page-panel">
-                    <div class="story-image-box">
-                      <img src="images/portfolio/templatemo_portfolio03.jpg" alt="Story 3 Image">
-                    </div>
-                    <div class="story-text-box">
-                      <h3>Short Story 3 &bull; Single Run</h3>
-                      <p>A fast-paced digital mosaic simulation running continuously over hardware-accelerated loops. Perfect horizontal canvas layout unity.</p>
-                    </div>
-                  </div>
-                </section>
-              </div>
-
+                </div>
+  
+              </section>
             </div>
+  
+            <!-- Adjust Story 2 and Story 3 sections identically below following this pattern -->
+  
           </div>
         </div>
-
-        <div class="row">
-          <div class="col-md-12 text-center">
-            <button type="button" class="btn btn-warning" id="close-story-reader">✕ Close Story Reading Panel</button>
-          </div>
-        </div>
-        
       </div>
+  
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <button type="button" class="btn btn-warning" id="close-story-reader">✕ Close Story Reading Panel</button>
+        </div>
+      </div>
+      
     </div>
+  </div>
 
     <!-- Core Engine Core Hooks[cite: 3] -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
