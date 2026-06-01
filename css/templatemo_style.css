@@ -491,7 +491,7 @@ h2.resp-accordion { color: #ffffff; }
 }
 
 /*======================================================================
-    HORIZONTAL IMMERSIVE OVERLAY READER SYSTEM (PAGE FLIP VERSION)
+    HORIZONTAL IMMERSIVE OVERLAY READER SYSTEM (LARGE CANVAS VERSION)
 ======================================================================*/
 
 #story-reader {
@@ -529,18 +529,18 @@ h2.resp-accordion { color: #ffffff; }
     align-items: center !important;
 }
 
-/* Centralized 3D perspective viewport context */
+/* Centralized 3D perspective viewport context - INCREASED HEIGHT */
 .nick-story-scroller-container {
-    width: 90vw !important;  
-    max-width: 1050px !important; 
-    height: 70vh !important;
-    max-height: 580px !important;
+    width: 92vw !important;  
+    max-width: 1100px !important; 
+    height: 82vh !important;       /* Increased from 70vh for a taller presence */
+    max-height: 750px !important;  /* Increased from 580px to stop desktop clipping */
     border: 1px solid #D1B200;
     overflow: hidden !important; 
     position: relative;
     background: #111111;
-    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8);
-    perspective: 1500px; /* Essential feature hook for authentic 3D transforms */
+    box-shadow: 0 35px 80px rgba(0, 0, 0, 0.85);
+    perspective: 1500px; 
 }
 
 /* Stacks pages neatly on top of each other */
@@ -573,11 +573,11 @@ h2.resp-accordion { color: #ffffff; }
     height: 100% !important;
     background: #1a1a1a;
     box-sizing: border-box !important;
-    transform-origin: left center; /* Hinges page flips exactly like a book spine */
+    transform-origin: left center; 
     z-index: 1;
 }
 
-/* --- COVER PAGE STYLING --- */
+/* --- PAGE MODEL A: COVER PAGES --- */
 .nick-page-panel.cover-page {
     background: #111111;
 }
@@ -594,7 +594,7 @@ h2.resp-accordion { color: #ffffff; }
     object-fit: cover !important;
 }
 
-/* --- TEXT CHAPTER PAGES STYLING --- */
+/* --- PAGE MODEL B: PURE TEXT CHAPTER PAGES --- */
 .nick-page-panel.text-page {
     background: #1e1e1e;
 }
@@ -602,7 +602,7 @@ h2.resp-accordion { color: #ffffff; }
 .story-full-text-box {
     width: 100% !important;
     height: 100% !important;
-    padding: 35px 40px !important;
+    padding: 40px 35px !important;  /* Optimized interior padding for text breathing room */
     background: #1e1e1e;
     box-sizing: border-box !important;
     overflow-y: auto !important; 
@@ -611,12 +611,12 @@ h2.resp-accordion { color: #ffffff; }
 
 @media(min-width: 768px) {
     .story-full-text-box {
-        padding: 55px 75px !important;
+        padding: 60px 85px !important;
     }
 }
 
 .story-full-text-box h3 {
-    font-size: 1.75rem !important;
+    font-size: 1.85rem !important;
     font-weight: 400 !important;
     color: #D1B200 !important;
     margin-top: 0 !important;
@@ -627,10 +627,10 @@ h2.resp-accordion { color: #ffffff; }
 }
 
 .story-full-text-box p {
-    font-size: 1.12rem !important;
-    line-height: 1.85 !important;
+    font-size: 1.15rem !important;
+    line-height: 1.90 !important; /* Enhanced readability line height */
     color: #dfdfdf !important;
-    margin-bottom: 22px !important;
+    margin-bottom: 24px !important;
     text-align: justify;
 }
 
@@ -648,7 +648,7 @@ h2.resp-accordion { color: #ffffff; }
 /* --- FOOTER & UI BUTTON --- */
 #story-reader .row {
     width: 100% !important;
-    margin: 30px 0 0 0 !important;
+    margin: 25px 0 0 0 !important; /* Slightly pulled up margin for safe viewport clearance */
     display: flex !important;
     justify-content: center !important;
 }
