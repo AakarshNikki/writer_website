@@ -52,8 +52,8 @@ body.blurred > * {
   margin: 0 auto;
   max-width: 70%;
   display: inline-block;
-  *display: inline;
-  *zoom: 1;
+  display: inline;
+  zoom: 1;
   padding: 10px;
   color: #fff;
   font-size: 12px;
