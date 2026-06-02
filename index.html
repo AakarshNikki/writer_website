@@ -16,20 +16,6 @@
 	<script src="js/jquery.lightbox.js"></script>
 	<script src="js/templatemo_custom.js"></script>
     <script src="js/easyResponsiveTabs.js" type="text/javascript"></script>  
-     <script>
-    function showhide()
-    {
-        var div = document.getElementById("newpost");
-		if (div.style.display !== "none") 
-		{
-			div.style.display = "none";
-		}
-		else 
-		{
-			div.style.display = "block";
-		}
-    }
-  </script>
   </head>
   <body>
     <div class="logocontainer">
@@ -41,7 +27,6 @@
     </div>
     
     <div id="menu-container" class="main_menu">
-      <!-- homepage start -->
       <div class="content homepage" id="menu-1">
         <div class="container">
           <div class="col-md-3 col-sm-6 nick_leftgap">
@@ -75,9 +60,6 @@
           </div>
         </div>
       </div>
-      <!-- homepage end -->
-
-      <!-- poems section -->
       <div class="content services" id="menu-2">
 		<div class="container">
         	<div class="row nick_bordergapborder">
@@ -104,35 +86,91 @@
         </div>
      </div>
 	    
-     <!-- STORIES GRID CONTAINER (Classes preserved to keep legacy transition engine tracking active) -->
-     <div class="content portfolio portfolio-grid-container" id="menu-3" style="display: none;">
+     <!-- STORIES PAGINATED VIEWPORT CONTAINER -->
+    <!-- STORIES PAGINATED VIEWPORT CONTAINER -->
+    <div class="content portfolio portfolio-grid-container" id="menu-3" style="display: none;">
     	<div class="container">
-          	<div class="col-md-3 col-sm-6 nick_leftgap">
-            	<div class="nick_mainportfolio nick_botgap">
-                	<div class="nick_link"><a href="#" class="story-select-btn" data-story="story-1">Short Story 1</a></div>
+          
+          <div class="nick-stories-slider-viewport">
+            <div class="nick-stories-slider-track">
+              
+              <!-- PAGE 1 OF STORIES -->
+              <div class="nick-stories-slider-page">
+                <div class="col-md-3 col-sm-6 nick_leftgap">
+                  <div class="nick_mainportfolio nick_botgap">
+                    <div class="nick_link"><a href="#" class="story-select-btn" data-story="story-1">Short Story 1</a></div>
+                  </div>
+                  <div class="nick_mainimg"><img src="images/portfolio/templatemo_portfolio01.jpg" alt="gallery 1"></div>
                 </div>
-                <div class="nick_mainimg"><img src="images/portfolio/templatemo_portfolio01.jpg" alt="gallery 1"></div>
-          	</div>
-            <div class="col-md-3 col-sm-6 nick_leftgap">
-            	<div class="nick_mainimg nick_botgap nick_portfotopgap"><img src="images/portfolio/templatemo_portfolio02.jpg" alt="gallery 2"></div>
-                <div class="nick_mainportfolio">
-                      <div class="nick_link"><a href="#" class="story-select-btn" data-story="story-2">Short Story 2</a></div>
+                <div class="col-md-3 col-sm-6 nick_leftgap">
+                  <div class="nick_mainimg nick_botgap nick_portfotopgap"><img src="images/portfolio/templatemo_portfolio02.jpg" alt="gallery 2"></div>
+                  <div class="nick_mainportfolio">
+                    <div class="nick_link"><a href="#" class="story-select-btn" data-story="story-2">Short Story 2</a></div>
+                  </div>
                 </div>
+                <div class="col-md-3 col-sm-6 nick_leftgap">
+                  <div class="nick_mainportfolio nick_botgap nick_topgap">
+                    <div class="nick_link"><a href="#" class="story-select-btn" data-story="story-3">Short Story 3</a></div>
+                  </div>
+                  <div class="nick_mainimg"><img src="images/portfolio/templatemo_portfolio03.jpg" alt="gallery 3"></div>
+                </div>
+                <!-- GO BACK SECTION FOR SLIDE 1 (IMAGE ABOVE, HEADING BELOW) -->
+                <div class="col-md-3 col-sm-6 nick_leftgap">
+                  <div class="nick_mainimg nick_botgap">
+                    <img src="images/portfolio/templatemo_portfolio04.jpg" alt="back control screen decoration">
+                  </div>
+                  <div class="nick_portfolioback">
+                    <div class="nick_link"><a class="show-1 templatemo_homeportfolio" href="#">Go Back</a></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PAGE 2 OF STORIES -->
+              <div class="nick-stories-slider-page">
+  
+                <div class="col-md-3 col-sm-6 nick_leftgap">
+                  <div class="nick_mainportfolio nick_botgap">
+                    <div class="nick_link"><a href="#" class="story-select-btn" data-story="story-4">Short Story 4</a></div>
+                  </div>
+                  <div class="nick_mainimg"><img src="images/portfolio/templatemo_portfolio01.jpg" alt="gallery 4"></div>
+                </div>
+              
+                <div class="col-md-3 col-sm-6 nick_leftgap">
+                  <div class="nick_mainimg nick_botgap nick_portfotopgap"><img src="images/portfolio/templatemo_portfolio02.jpg" alt="gallery 5"></div>
+                  <div class="nick_mainportfolio">
+                    <div class="nick_link"><a href="#" class="story-select-btn" data-story="story-5">Short Story 5</a></div>
+                  </div>
+                </div>
+              
+                <div class="col-md-3 col-sm-6 nick_leftgap">
+                  <div class="nick_mainportfolio nick_botgap nick_topgap">
+                    <div class="nick_link"><a href="#" class="story-select-btn" data-story="story-6">Short Story 6</a></div>
+                  </div>
+                  <div class="nick_mainimg">
+                    <img src="images/portfolio/templatemo_portfolio03.jpg" alt="windmills image wrapper">
+                  </div>
+                </div>
+              
+                <div class="col-md-3 col-sm-6 nick_leftgap">
+                  <div class="nick_mainimg nick_botgap nick_topgap">
+                    <img src="images/portfolio/templatemo_portfolio04.jpg" alt="back decoration banner">
+                  </div>
+                  <div class="nick_portfolioback">
+                    <div class="nick_link"><a class="show-1 templatemo_homeportfolio" href="#">Go Back</a></div>
+                  </div>
+                </div>
+              
+              </div>
+
             </div>
-            <div class="col-md-3 col-sm-6 nick_leftgap">
-            	<div class="nick_mainportfolio nick_botgap nick_topgap">
-                	<div class="nick_link"><a href="#" class="story-select-btn" data-story="story-3">Short Story 3</a></div>
-                </div>
-                <div class="nick_mainimg"><img src="images/portfolio/templatemo_portfolio03.jpg" alt="gallery 3"></div>
-            </div>
-            <div class="col-md-3 col-sm-6 nick_leftgap">
-            	<div class="nick_mainimg nick_botgap nick_topgap">
-             	   <img src="images/portfolio/templatemo_portfolio04.jpg" alt="gallery 4">
-                </div>
-                <div class="nick_portfolioback">
-                	<div class="nick_link"><a class="show-1 templatemo_homeportfolio" href="#">Go Back</a></div>
-                </div>
-            </div>
+          </div>
+
+          <!-- Pagination UI Dots Indicators -->
+          <div class="nick-stories-dots-container">
+            <span class="nick-dot active" data-slide="0"></span>
+            <span class="nick-dot" data-slide="1"></span>
+          </div>
+          
         </div>
      </div>
 
@@ -315,73 +353,57 @@
        </div>
     </div>
 
-    <!-- FLOATING IMMERSIVE POPUP VIEWPORT OVERLAY (Isolated here outside the menu architectures) -->
-   <!-- FLOATING IMMERSIVE POPUP VIEWPORT OVERLAY -->
-<div id="story-reader">
-    <div class="container">
+    <div id="story-reader">
+        <div class="container">
+          <div class="nick-story-scroller-wrapper">
+            <div class="nick-story-scroller-container">
+              <div class="nick-story-content-track">
+                
+                <div class="story-instance-data" id="story-1-data" style="display: none; width: 100%; height: 100%;">
+                  <section class="nick-story-section">
+                    <div class="nick-page-panel cover-page">
+                      <div class="story-full-image-box">
+                        <img src="images/portfolio/templatemo_portfolio01.jpg" alt="Story 1 Cover Image">
+                      </div>
+                    </div>
+                    <div class="nick-page-panel text-page">
+                      <div class="story-full-text-box">
+                        <h3>Short Story 1 &bull; Chapter 1</h3>
+                        <p>The journey across the endless shifting clouds began before dawn. The mechanical birds chirped rhythmically as the system warmed up.</p>
+                        <p>As the daylight filtered through the glass domes, the true scope of the sky-city revealed itself. Aakarsh adjusted his mechanical optics and initiated the propulsion sequence.</p>
+                      </div>
+                    </div>
+                    <div class="nick-page-panel text-page">
+                      <div class="story-full-text-box">
+                        <h3>Short Story 1 &bull; Chapter 2</h3>
+                        <p>Navigating the complex horizontal storm systems required absolute manual control. Every algorithm had to be rewritten mid-flight.</p>
+                        <p>The feedback through the primary steering grid grew tense as static discharge raked across the external sensory rods. It was a race against the network firewall collapse.</p>
+                      </div>
+                    </div>
+                  </section>
+                </div>
       
-      <div class="nick-story-scroller-wrapper">
-        <div class="nick-story-scroller-container">
-          <div class="nick-story-content-track">
-            
-            <!-- STORY 1 -->
-            <div class="story-instance-data" id="story-1-data" style="display: none; width: 100%; height: 100%;">
-              <section class="nick-story-section">
-                
-                <!-- PAGE 1: COVER IMAGE ONLY -->
-                <div class="nick-page-panel cover-page">
-                  <div class="story-full-image-box">
-                    <img src="images/portfolio/templatemo_portfolio01.jpg" alt="Story 1 Cover Image">
-                  </div>
-                </div>
-                
-                <!-- PAGE 2: CHAPTER 1 TEXT -->
-                <div class="nick-page-panel text-page">
-                  <div class="story-full-text-box">
-                    <h3>Short Story 1 &bull; Chapter 1</h3>
-                    <p>The journey across the endless shifting clouds began before dawn[cite: 8]. The mechanical birds chirped rhythmically as the system warmed up[cite: 8].</p>
-                    <p>As the daylight filtered through the glass domes, the true scope of the sky-city revealed itself. Aakarsh adjusted his mechanical optics and initiated the propulsion sequence.</p>
-                  </div>
-                </div>
-                
-                <!-- PAGE 3: CHAPTER 2 TEXT -->
-                <div class="nick-page-panel text-page">
-                  <div class="story-full-text-box">
-                    <h3>Short Story 1 &bull; Chapter 2</h3>
-                    <p>Navigating the complex horizontal storm systems required absolute manual control[cite: 8]. Every algorithm had to be rewritten mid-flight[cite: 8].</p>
-                    <p>The feedback through the primary steering grid grew tense as static discharge raked across the external sensory rods. It was a race against the network firewall collapse.</p>
-                  </div>
-                </div>
-  
-              </section>
+              </div>
             </div>
-  
-            <!-- Adjust Story 2 and Story 3 sections identically below following this pattern -->
-  
+          </div>
+          <div class="row">
+            <div class="col-md-12 text-center">
+              <button type="button" class="btn btn-warning" id="close-story-reader">✕ Close Story Reading Panel</button>
+            </div>
           </div>
         </div>
-      </div>
-  
-      <div class="row">
-        <div class="col-md-12 text-center">
-          <button type="button" class="btn btn-warning" id="close-story-reader">✕ Close Story Reading Panel</button>
-        </div>
-      </div>
-      
     </div>
-  </div>
 
-    <!-- Core Engine Core Hooks[cite: 3] -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="js/nick_stories.js"></script>
 
     <script type="text/javascript">
-    $(document).ready(function () {
-        $('#ab').easyResponsiveTabs({ type: 'vertical', width: 'auto', fit: true });
-		$('#cmt').easyResponsiveTabs({ type: 'vertical', width: 'auto', fit: true });
-    });
-</script>
-</body>
+        $(document).ready(function () {
+            $('#ab').easyResponsiveTabs({ type: 'vertical', width: 'auto', fit: true });
+    		$('#cmt').easyResponsiveTabs({ type: 'vertical', width: 'auto', fit: true });
+        });
+    </script>
+  </body>
 </html>

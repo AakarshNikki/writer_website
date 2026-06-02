@@ -491,7 +491,7 @@ h2.resp-accordion { color: #ffffff; }
 }
 
 /*======================================================================
-    HORIZONTAL IMMERSIVE OVERLAY READER SYSTEM (LARGE CANVAS VERSION)
+    HORIZONTAL IMMERSIVE OVERLAY READER SYSTEM (PAGE FLIP ENGINE)
 ======================================================================*/
 
 #story-reader {
@@ -529,12 +529,11 @@ h2.resp-accordion { color: #ffffff; }
     align-items: center !important;
 }
 
-/* Centralized 3D perspective viewport context - INCREASED HEIGHT */
 .nick-story-scroller-container {
     width: 92vw !important;  
     max-width: 1100px !important; 
-    height: 82vh !important;       /* Increased from 70vh for a taller presence */
-    max-height: 750px !important;  /* Increased from 580px to stop desktop clipping */
+    height: 82vh !important;       
+    max-height: 750px !important;  
     border: 1px solid #D1B200;
     overflow: hidden !important; 
     position: relative;
@@ -543,7 +542,6 @@ h2.resp-accordion { color: #ffffff; }
     perspective: 1500px; 
 }
 
-/* Stacks pages neatly on top of each other */
 .nick-story-content-track {
     position: relative !important;
     width: 100% !important;
@@ -564,7 +562,6 @@ h2.resp-accordion { color: #ffffff; }
     height: 100% !important;
 }
 
-/* Individual full stacked book pages */
 .nick-page-panel {
     position: absolute !important;
     top: 0 !important;
@@ -577,43 +574,22 @@ h2.resp-accordion { color: #ffffff; }
     z-index: 1;
 }
 
-/* --- PAGE MODEL A: COVER PAGES --- */
-.nick-page-panel.cover-page {
-    background: #111111;
-}
-
-.story-full-image-box {
-    width: 100% !important;
-    height: 100% !important;
-    overflow: hidden;
-}
-
-.story-full-image-box img {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-}
-
-/* --- PAGE MODEL B: PURE TEXT CHAPTER PAGES --- */
-.nick-page-panel.text-page {
-    background: #1e1e1e;
-}
+.nick-page-panel.cover-page { background: #111111; }
+.story-full-image-box { width: 100% !important; height: 100% !important; overflow: hidden; }
+.story-full-image-box img { width: 100% !important; height: 100% !important; object-fit: cover !important; }
+.nick-page-panel.text-page { background: #1e1e1e; }
 
 .story-full-text-box {
     width: 100% !important;
     height: 100% !important;
-    padding: 40px 35px !important;  /* Optimized interior padding for text breathing room */
+    padding: 40px 35px !important;  
     background: #1e1e1e;
     box-sizing: border-box !important;
     overflow-y: auto !important; 
     overflow-x: hidden !important;
 }
 
-@media(min-width: 768px) {
-    .story-full-text-box {
-        padding: 60px 85px !important;
-    }
-}
+@media(min-width: 768px) { .story-full-text-box { padding: 60px 85px !important; } }
 
 .story-full-text-box h3 {
     font-size: 1.85rem !important;
@@ -628,35 +604,23 @@ h2.resp-accordion { color: #ffffff; }
 
 .story-full-text-box p {
     font-size: 1.15rem !important;
-    line-height: 1.90 !important; /* Enhanced readability line height */
+    line-height: 1.90 !important; 
     color: #dfdfdf !important;
     margin-bottom: 24px !important;
     text-align: justify;
 }
 
-/* Scrollbar styling */
-.story-full-text-box::-webkit-scrollbar {
-    width: 6px;
-    background-color: #1e1e1e;
-}
+.story-full-text-box::-webkit-scrollbar { width: 6px; background-color: #1e1e1e; }
+.story-full-text-box::-webkit-scrollbar-thumb { background-color: #D1B200; border-radius: 10px; }
 
-.story-full-text-box::-webkit-scrollbar-thumb {
-    background-color: #D1B200;
-    border-radius: 10px;
-}
-
-/* --- FOOTER & UI BUTTON --- */
 #story-reader .row {
     width: 100% !important;
-    margin: 25px 0 0 0 !important; /* Slightly pulled up margin for safe viewport clearance */
+    margin: 25px 0 0 0 !important; 
     display: flex !important;
     justify-content: center !important;
 }
 
-#story-reader .text-center {
-    float: none !important;
-    width: auto !important;
-}
+#story-reader .text-center { float: none !important; width: auto !important; }
 
 #close-story-reader {
     padding: 12px 35px !important;
@@ -676,4 +640,118 @@ h2.resp-accordion { color: #ffffff; }
     color: #111111 !important;
     box-shadow: 0 4px 15px rgba(209, 178, 0, 0.3);
     cursor: pointer;
+}
+
+/*======================================================================
+    STORIES GRID SLIDER VIEWPORT ENGINE (RESPONSIVE FIXED)
+======================================================================*/
+
+.nick-stories-slider-viewport {
+    width: 100% !important;
+    overflow: hidden !important;
+    position: relative;
+    clear: both;
+}
+
+.nick-stories-slider-track {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    width: 200% !important; 
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    will-change: transform;
+}
+
+.nick-stories-slider-page {
+    width: 50% !important; 
+    float: left;
+}
+
+/* Clear floating grid architectures cleanly inside each sliding track view viewport */
+.nick-stories-slider-page::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Correct architecture scaling metrics across smartphones and tablet boundaries */
+@media(max-width: 991px) {
+    .portfolio-grid-container .container {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 15px !important;
+    }
+
+    /* Force bootstrap grid items back onto the absolute display layer horizontally inside slides */
+    .nick-stories-slider-page .col-sm-6 {
+        float: left !important;
+        width: 50% !important;
+        padding: 0 4px !important;
+    }
+
+    /* Hide decorative landscape panels to ensure optimal layout balance on micro panels */
+    .mobile-hide-img {
+        display: none !important;
+    }
+}
+
+/* Smart layout compression adjustment for smaller screen targets */
+@media(max-width: 480px) {
+    .nick-stories-slider-page .col-sm-6 {
+        width: 100% !important; /* Stack cleanly on extremely small phones */
+        float: none !important;
+    }
+}
+
+/* --- INDICATOR CONTROLS --- */
+.nick-stories-dots-container {
+    text-align: center !important;
+    margin: 25px auto 0 auto !important;
+    width: 100% !important;
+    display: block !important;
+    clear: both;
+}
+
+.nick-dot {
+    display: inline-block !important;
+    width: 12px !important;
+    height: 12px !important;
+    margin: 0 6px !important;
+    background: #555555 !important;
+    border-radius: 50% !important;
+    cursor: pointer !important;
+    transition: all 0.25s ease-in-out !important;
+}
+
+.nick-dot.active {
+    background: #D1B200 !important;
+    transform: scale(1.3);
+}
+/*======================================================================
+    STORIES CHECKERBOARD RE-ALIGNMENT ENGINE (DESKTOP EXTENSION)
+======================================================================*/
+@media (min-width: 992px) {
+    /* 1. Reset container heights to prevent browser height distortion crashes */
+    .portfolio-grid-container .nick-stories-slider-page {
+        display: block !important;
+        width: 100% !important;
+        clear: both;
+    }
+
+    /* 2. Target the third block column group on page 2 (Windmills Image Box) */
+    .portfolio-grid-container .nick-stories-slider-page:nth-child(2) .col-md-3:nth-child(3) {
+        clear: none !important;
+        float: left !important;
+    }
+
+    /* 3. Re-align the final elements inside the block tracking layers */
+    .portfolio-grid-container .nick-stories-slider-page:nth-child(2) .col-md-3:nth-child(3) .nick_mainimg {
+        margin-top: 0 !important;
+    }
+
+    /* 4. Ensure the grey Go Back block is uniformly aligned next to the image */
+    .portfolio-grid-container .nick-stories-slider-page:nth-child(2) .col-md-3:nth-child(4) .nick_portfolioback {
+        margin-top: 0 !important;
+    }
 }
