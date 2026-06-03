@@ -874,3 +874,64 @@ h2.resp-accordion { color: #ffffff; }
         margin-top: 0 !important;
     }
 }
+
+/*======================================================================
+    POEM HOVER OVERLAY SYSTEM (MATCHING 1000094701.png)
+======================================================================*/
+
+.nick-poem-card-container {
+    position: relative !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+}
+
+/* Immersive Card Frame Engine */
+.nick-poem-card-overlay {
+    position: absolute !important;
+    top: 5% !important;
+    left: 4% !important;
+    right: 4% !important;
+    bottom: 5% !important;
+    
+    /* Clean dark brown structural frame matching 1000094701.png */
+    border: 6px solid #5c2c16 !important; 
+    box-sizing: border-box !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    
+    /* DEFAULT STATE: 40% Rectangle Frame Opacity */
+    opacity: 0.40 !important; 
+    
+    /* Smooth CSS layer transitions when shifting into hover states */
+    transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1) !important;
+}
+
+/* Heading Typography Layer inside the frame */
+.nick-poem-card-title {
+    color: #ffffff !important;
+    font-family: Tahoma, Arial, sans-serif !important;
+    font-weight: normal !important;
+    text-shadow: 2px 3px 6px rgba(0, 0, 0, 0.9) !important;
+    margin: 0 !important;
+    text-align: center !important;
+    padding: 0 6px !important;
+    
+    /* Responsive text scalability rule */
+    font-size: calc(1.3rem + 0.8vw) !important; 
+    
+    /* DEFAULT STATE: 70% Text Lettering Opacity */
+    opacity: 0.90 !important; 
+    transition: opacity 0.3s ease !important;
+}
+
+/* --- INTERACTIVE ANIMATION STATE --- */
+/* Increase the combined frame opacity to 90% when mouse hovers over container */
+.nick-poem-card-container:hover .nick-poem-card-overlay {
+    opacity: 0.90 !important;
+}
+
+/* Elevate the text elements to full high-contrast density concurrently */
+.nick-poem-card-container:hover .nick-poem-card-title {
+    opacity: 1.0 !important; 
+}
