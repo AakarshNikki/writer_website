@@ -9,7 +9,6 @@ html, body {
     color: #333333;
     background: #333333;
     font-size: 16px;
-    /* MASTER SCROLL FIXED ENGINE: Enables dynamic vertical scrolling across all screen devices natively */
     overflow-y: auto !important;
     overflow-x: hidden !important;
     height: auto !important;
@@ -149,8 +148,8 @@ h3 { text-align: center; font-size: 2em; }
 .lightbox-button { position: absolute; z-index: 99999; width: 32px; height: 32px; opacity: 0.6; transition: all 0.2s; }
 .lightbox-button:hover { opacity: 1; transform: scale(1.2); }
 .lightbox-close { right: 30px; top: 30px; background-image: url("../images/close.png"); }
-.lightbox-next { right: 30px; top: 50%; background-image: url("../images/next.png"); }
-.lightbox-previous { left: 30px; top: 50%; background-image: url("../images/previous.png"); }
+.lightbox-next { right: 30px; top: 50%; background-image: url("../images/previous.png"); }
+.lightbox-previous { left: 30px; top: 50%; background-image: url("../images/next.png"); }
 
 /* --- EASY RESPONSIVE TABS ENGINE --- */
 ul.resp-tabs-list { margin: 0px; padding: 0px; }
@@ -227,14 +226,12 @@ h2.resp-accordion { cursor: pointer; display: none; height: 90px; line-height: 9
 
 /* --- DESKTOP VIEWPORTS BREAKPOINT ENGINE --- */
 @media(min-width:992px) {
-    /* FIXED SCROLL CORE RE-ENGINEERING: Stops the framework from locking the screen scrollbars */
     html, body { 
         overflow-y: auto !important; 
         overflow-x: hidden !important; 
         height: auto !important; 
     }
     
-    /* Clamps only the home dashboard layout grid from spilling over */
     #menu-container {
         width: 100% !important;
         position: relative !important;
@@ -340,7 +337,7 @@ h2.resp-accordion { cursor: pointer; display: none; height: 90px; line-height: 9
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Nanum+Pen+Script&family=Roboto&display=swap');
 
 .o-page {
-  overflow: visible !important; /* FIXED: Unlocks length parsing constraints */
+  overflow: visible !important; 
   width: 100% !important;
   background-color: hsla(52, 40%, 96%, 1.00);
 }
@@ -441,6 +438,14 @@ h2.resp-accordion { cursor: pointer; display: none; height: 90px; line-height: 9
 .o-page .c-transition--large {
   height: 375px;
   width: 600px;
+}
+
+.o-page .c-transition--large img {
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  width: 100%;
+  z-index: 1;
 }
 
 .o-page .c-transition--center {
@@ -572,10 +577,176 @@ h2.resp-accordion { cursor: pointer; display: none; height: 90px; line-height: 9
 /*======================================================================
     DYNAMIC VIEWPORT CANVAS OVERRIDES (POEMS STANDALONE ACTIVE)
 ======================================================================*/
-/* Forces the standalone container layer to take full scroll ownership */
 #menu-2.standalone-poems-canvas {
     overflow: visible !important;
     height: auto !important;
     min-height: 100vh !important;
     padding-bottom: 120px !important;
+}
+
+/*======================================================================
+    IMMERSIVE FULL-SCREEN SINGLE POEM SCROLL-ROLL READER STYLES
+======================================================================*/
+.read-poem-prompt {
+    display: inline-block;
+    font-size: 0.85rem;
+    color: #C584F8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 500;
+    margin-top: 5px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+.poem-showcase-card:hover .read-poem-prompt {
+    color: #111111;
+}
+
+#poem-modal-reader {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background-color: hsla(52, 40%, 96%, 1.00) !important; 
+    z-index: 99999999 !important; 
+    opacity: 0;
+    display: none;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --clip-reveal-delta: 0px;
+    --crease-scale-y: 0;
+    --crease-opacity: 0;
+}
+
+.poem-scroll-scroller-viewport {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.poem-scroll-scroll-content {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    overflow-y: scroll !important;
+    overflow-x: hidden !important;
+    scrollbar-width: none; 
+}
+.poem-scroll-scroll-content::-webkit-scrollbar {
+    display: none; 
+}
+
+.poem-scroll-entries-track {
+    width: 100% !important;
+    max-width: 600px !important;
+    margin: 0 auto !important;
+    padding: 0 20px !important;
+    height: 3200px; 
+}
+
+.poem-scroll-article {
+    position: sticky !important;
+    top: 100px; 
+    margin-top: 100px;
+    width: 100% !important;
+    transform-origin: 50% 0px;
+}
+
+.poem-scroll-compact-crease {
+    position: absolute !important;
+    left: 0 !important;
+    right: 0 !important;
+    top: 0 !important;
+    transform-origin: 50% 0;
+    transform: scaleY(var(--crease-scale-y));
+    z-index: 10;
+}
+.poem-scroll-compact-crease::before {
+    content: '';
+    position: absolute !important;
+    left: 0; right: 0; top: 0;
+    height: 60px;
+    filter: blur(4px);
+    background: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
+    opacity: var(--crease-opacity);
+}
+.poem-scroll-compact-crease::after {
+    content: '';
+    display: block !important;
+    width: 100%;
+    height: 24px;
+    background: linear-gradient(#d5d5d5, #ffffff 65%, #dddddd);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.06);
+}
+
+.poem-scroll-inner-paper {
+    background: #ffffff !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04) !important;
+    border-radius: 4px;
+    transform: translateY(calc(var(--clip-reveal-delta) * -1));
+    clip-path: polygon(0 var(--clip-reveal-delta), 100% var(--clip-reveal-delta), 100% 100%, 0% 100%);
+}
+
+.poem-scroll-header-info {
+    padding: 35px 40px 20px 40px !important;
+    border-bottom: 1px solid #f2f0ea !important;
+    text-align: center !important;
+}
+.poem-scroll-header-info h1 {
+    font-family: 'DM Serif Display', serif !important;
+    font-size: 2.35rem !important;
+    font-weight: 400 !important;
+    color: #111111 !important;
+    text-shadow: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    letter-spacing: 0.5px !important;
+    display: block !important;
+}
+
+.poem-scroll-text-body {
+    padding: 35px 45px 50px 45px !important;
+    font-family: 'Poppins', sans-serif !important;
+    font-size: 1.05rem !important;
+    line-height: 1.85 !important;
+    color: #444444 !important;
+}
+.poem-scroll-text-body p {
+    margin: 0 0 20px 0 !important;
+    color: #444444 !important;
+    text-align: center !important; 
+    opacity: 1 !important;
+    transform: none !important;
+}
+
+#close-poem-modal-reader {
+    position: fixed !important;
+    bottom: 30px !important;
+    left: 50% !important;
+    transform: translateX(-50%) scale(1) !important;
+    z-index: 100000000 !important;
+    padding: 12px 35px !important;
+    border: 1px solid #111111 !important;
+    background: #111111 !important;
+    color: #ffffff !important;
+    font-family: 'Poppins', sans-serif !important;
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-radius: 50px;
+    cursor: pointer !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15) !important;
+    transition: all 0.25s ease !important;
+}
+#close-poem-modal-reader:hover {
+    background: #ffffff !important;
+    color: #111111 !important;
+    transform: translateX(-50%) scale(1.05) !important;
 }

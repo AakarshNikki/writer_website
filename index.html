@@ -14,7 +14,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/ScrollMagic.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/plugins/animation.gsap.js"></script>
 
-    <script src="js/nick_script.js"></script>
+
   </head>
   <body>
     <div class="logocontainer">
@@ -182,7 +182,7 @@
                   <div class="nick_col50 nick_leftgap nick_botgap"><img src="images/templatemo_testimonial2.jpg" alt="testimonial"></div>
                 </div>
                 <div>
-                  <div class="nick_col50 nick_rightgap_about">
+                  <div class="nick_col50 nick_leftgap_about">
                     <div class="nick_graybg nick_botgap">
                       <div class="nick_frame">
                         <h2>Recognitions</h2>
@@ -292,57 +292,46 @@
           </div>
         </div>
       </div>
-    </div> <div id="menu-2" class="content services standalone-poems-canvas" style="display: none;">
+    </div> 
+    
+    <div id="menu-2" class="content services standalone-poems-canvas" style="display: none;">
       <div class="container">
         <div class="row nick_bordergapborder" style="padding-top:20px; padding-bottom:20px;">
-          
           <div class="o-page">
             <div class="o-main">
-              <div class="o-container">
+              <div class="o-container poem-grid-trigger-wrapper">
                 
                 <h1 class="c-author js-liquify-trigger">
                   <div class="c-author__korean">Poems</div>
                   <div class="c-author__english">( By Aakarsh Nikki)</div>
                 </h1>
 
-                <div class="poem-showcase-card">
+                <div class="poem-showcase-card" data-poem-id="poem-1">
                   <div class="js-ink-trigger c-transition c-transition--large c-transition--center">
                     <img class="c-transition__img" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/204808/Hyewon-Wolha-jeongin.jpg" alt="Fallen Rose Artwork" />
                   </div>
                   <h2 class="poem-card-headline">Fallen Rose</h2>
-                  <p class="poem-card-theme-text" data-delay="0.2">
-                    An exploration of passing time, delicate loss, and silent resilience. 
-                    This piece balances natural imagery with the sharp, contrasting weights of emotional memory.
+                  <p class="poem-card-theme-text">
+                    An exploration of passing time, delicate loss, and silent resilience.
                   </p>
+                  <span class="read-poem-prompt">Click to read full poem &rarr;</span>
                 </div>
 
-                <div class="poem-showcase-card">
+                <div class="poem-showcase-card" data-poem-id="poem-2">
                   <div class="js-ink-trigger c-transition c-transition--center">
                     <img class="c-transition__img" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/204808/Hyewon-Jusa.geobae.jpg" alt="Midnight Shadows Artwork" />
                   </div>
                   <h2 class="poem-card-headline">Midnight Shadows</h2>
-                  <p class="poem-card-theme-text" data-delay="0.3">
-                    Tracing the quiet geometry of urban isolation beneath the watch of an indifferent moon. 
-                    A rhythmic study detailing the hidden architectures of late-night thoughts.
-                    </p>
-                </div>
-
-                <div class="poem-showcase-card">
-                  <div class="js-ink-trigger c-transition c-transition--center">
-                    <img class="c-transition__img" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/204808/Hyewon-Dano.pungjeong.jpg" alt="Echoes of Ink Artwork" />
-                  </div>
-                  <h2 class="poem-card-headline">Echoes of Ink</h2>
-                  <p class="poem-card-theme-text" data-delay="0.4">
-                    A self-reflective narrative honoring traditional literary brush strokes and fluid prose. 
-                    Capturing the friction between permanent ink markings and temporary, evolving artistic inspirations.
+                  <p class="poem-card-theme-text">
+                    Tracing the quiet geometry of urban isolation beneath the watch of an indifferent moon.
                   </p>
+                  <span class="read-poem-prompt">Click to read full poem &rarr;</span>
                 </div>
 
                 <p><img class="c-stamp" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/204808/heywon-stamp.png" alt="Hyewon stamp" /></p>
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </div>
@@ -353,11 +342,12 @@
        </div>
     </div>
 
-    <div id="story-reader">
+    <div id="story-reader" style="display: none;">
         <div class="container">
           <div class="nick-story-scroller-wrapper">
             <div class="nick-story-scroller-container">
               <div class="nick-story-content-track">
+                
                 <div class="story-instance-data" id="story-1-data" style="display: none; width: 100%; height: 100%;">
                   <section class="nick-story-section">
                     <div class="nick-page-panel cover-page">
@@ -371,15 +361,105 @@
                     </div>
                   </section>
                 </div>
+
+                <div class="story-instance-data" id="story-2-data" style="display: none; width: 100%; height: 100%;">
+                  <section class="nick-story-section">
+                    <div class="nick-page-panel cover-page">
+                      <div class="story-full-image-box"><img src="images/portfolio/templatemo_portfolio02.jpg" alt="Cover"></div>
+                    </div>
+                    <div class="nick-page-panel text-page">
+                      <div class="story-full-text-box">
+                        <h3>Short Story 2 &bull; Chapter 1</h3>
+                        <p>Deep within the unmapped valleys, an old beacon hummed back to life...</p>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+
+                <div class="story-instance-data" id="story-3-data" style="display: none; width: 100%; height: 100%;">
+                  <section class="nick-story-section">
+                    <div class="nick-page-panel cover-page">
+                      <div class="story-full-image-box"><img src="images/portfolio/templatemo_portfolio03.jpg" alt="Cover"></div>
+                    </div>
+                    <div class="nick-page-panel text-page">
+                      <div class="story-full-text-box">
+                        <h3>Short Story 3 &bull; Chapter 1</h3>
+                        <p>Rays of bronze light filtered through the industrial iron lattice walls...</p>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+
+                <div class="story-instance-data" id="story-4-data" style="display: none; width: 100%; height: 100%;">
+                  <section class="nick-story-section">
+                    <div class="nick-page-panel cover-page">
+                      <div class="story-full-image-box"><img src="images/portfolio/templatemo_portfolio01.jpg" alt="Cover"></div>
+                    </div>
+                    <div class="nick-page-panel text-page">
+                      <div class="story-full-text-box">
+                        <h3>Short Story 4 &bull; Chapter 1</h3>
+                        <p>The marketplace echoed with dialects from three distant oceans...</p>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+
+                <div class="story-instance-data" id="story-5-data" style="display: none; width: 100%; height: 100%;">
+                  <section class="nick-story-section">
+                    <div class="nick-page-panel cover-page">
+                      <div class="story-full-image-box"><img src="images/portfolio/templatemo_portfolio02.jpg" alt="Cover"></div>
+                    </div>
+                    <div class="nick-page-panel text-page">
+                      <div class="story-full-text-box">
+                        <h3>Short Story 5 &bull; Chapter 1</h3>
+                        <p>Every cipher etched onto the obsidian pillar pointed toward a singular coordinate...</p>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+
+                <div class="story-instance-data" id="story-6-data" style="display: none; width: 100%; height: 100%;">
+                  <section class="nick-story-section">
+                    <div class="nick-page-panel cover-page">
+                      <div class="story-full-image-box"><img src="images/portfolio/templatemo_portfolio03.jpg" alt="Cover"></div>
+                    </div>
+                    <div class="nick-page-panel text-page">
+                      <div class="story-full-text-box">
+                        <h3>Short Story 6 &bull; Chapter 1</h3>
+                        <p>Wind currents spiraled across the mechanical mills, humming a rhythmic verse...</p>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+
               </div>
             </div>
           </div>
           <div class="row">
-            <div class="col-md-12 text-center">
+            <div class="col-md-12 text-center" style="margin-top: 25px;">
               <button type="button" class="btn btn-warning" id="close-story-reader">✕ Close Story Reading Panel</button>
             </div>
           </div>
         </div>
+    </div>
+
+    <div id="poem-modal-reader" style="display: none;">
+      <div class="poem-scroll-scroller-viewport">
+        <div class="poem-scroll-scroll-content">
+          <div class="poem-scroll-entries-track">
+            <article class="poem-scroll-article">
+              <div class="poem-scroll-compact-crease"></div>
+              <div class="poem-scroll-inner-paper">
+                <div class="poem-scroll-header-info">
+                  <h1 id="active-modal-poem-title">Poem Title</h1>
+                </div>
+                <div class="poem-scroll-text-body" id="active-modal-poem-text"></div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+      <button type="button" id="close-poem-modal-reader">✕ Close Poem</button>
     </div>
 
     <div class="nick-sticky-back-container">
@@ -398,11 +478,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script>
-      $(document).ready(function () {
-          $('#ab').easyResponsiveTabs({ type: 'vertical', width: 'auto', fit: true });
-          $('#cmt').easyResponsiveTabs({ type: 'vertical', width: 'auto', fit: true });
-      });
-    </script>
+    <script src="js/nick_script.js"></script>
   </body>
 </html>

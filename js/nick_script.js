@@ -281,8 +281,7 @@ jQuery(document).ready(function($) {
             opacity: 1, y: 0,
             onComplete: () => { 
                 if (typeof onCompleteCallback === "function") onCompleteCallback(); 
-                // Recalculates viewport bounds dynamically when section is revealed
-                if (typeof ScrollTrigger !== 'undefined') { ScrollTrigger.refresh(); }
+                if (typeof ScrollTrigger !== 'undefined') { ScrollTrigger.refresh(true); }
             }
         });
     }
@@ -301,54 +300,73 @@ jQuery(document).ready(function($) {
         });
     }
 
+    // Navigation Switch Toggles Mapped Cleanly
     $(".main_menu a.nick_page2").click(function(e) { 
         e.preventDefault(); 
-        showGlobalBackButton(); 
+        showGlobalBackButton(); // KEEP: Enabled exclusively for Poems grid panel view
         
-        // Hides brand header text elements over the standalone canvas panel view
-        gsap.to(".logocontainer", { opacity: 0, duration: 0.3, onComplete: () => $(".logocontainer").hide() });
+        gsap.to(".logocontainer.default-menu-footer", { opacity: 0, duration: 0.2 });
+        gsap.to(".logocontainer:not(.default-menu-footer)", { opacity: 0, duration: 0.3, onComplete: () => $(".logocontainer:not(.default-menu-footer)").hide() });
 
-        transitionToSection('#menu-container .homepage', '#menu-2', function() {
-            // LAPTOP SCROLL FIX: Toggle CSS rules after the grid fades out
-            $("body").addClass("allow-scroll");
-            initPoemRevealEngine();
-        }); 
+        gsap.to("#menu-container", { opacity: 0, y: -15, duration: 0.4, onComplete: () => {
+            $("#menu-container").hide();
+            
+            $("#menu-2").css({ "display": "block", "opacity": "0", "transform": "translateY(15px)" });
+            gsap.to("#menu-2", { opacity: 1, y: 0, duration: 0.4, onComplete: () => {
+                $("body").addClass("allow-scroll");
+                initPoemRevealEngine();
+                window.scrollTo(0, 0);
+            }});
+        }});
     });
     
     $(".main_menu a.nick_page3").click(function(e) {
         e.preventDefault();
-        hideGlobalBackButton(); 
+        hideGlobalBackButton(); // BUG FIX: Explicitly hides arrow button when entering Stories grid shelf
         transitionToSection('#menu-container .homepage', '#menu-container .portfolio', () => {
             gsap.set(".nick-stories-slider-track", { xPercent: 0 });
             $(".nick-dot").removeClass("active").first().addClass("active");
         });
     });
-    $(".main_menu a.nick_homeportfolio").click(function(e) { e.preventDefault(); transitionToSection('#menu-container .portfolio', '#menu-container .homepage'); });
+
+    // FIXED STORIES ACTION MAPPINGS PRESERVATION
+    $(".main_menu a.nick_homeportfolio").click(function(e) { 
+        e.preventDefault(); 
+        hideGlobalBackButton();
+        transitionToSection('#menu-container .portfolio', '#menu-container .homepage'); 
+    });
 
     $(".main_menu a.nick_page4").click(function(e) { e.preventDefault(); hideGlobalBackButton(); transitionToSection('#menu-container .homepage', '#menu-container .testimonial'); });
-    $(".main_menu a.nick_hometestimonial").click(function(e) { e.preventDefault(); transitionToSection('#menu-container .testimonial', '#menu-container .homepage'); });
+    $(".main_menu a.nick_hometestimonial").click(function(e) { e.preventDefault(); hideGlobalBackButton(); transitionToSection('#menu-container .testimonial', '#menu-container .homepage'); });
 
     $(".main_menu a.nick_page5").click(function(e) { e.preventDefault(); hideGlobalBackButton(); transitionToSection('#menu-container .homepage', '#menu-container .about'); });
-    $(".main_menu a.nick_homeabout").click(function(e) { e.preventDefault(); transitionToSection('#menu-container .about', '#menu-container .homepage'); });
+    $(".main_menu a.nick_homeabout").click(function(e) { e.preventDefault(); hideGlobalBackButton(); transitionToSection('#menu-container .about', '#menu-container .homepage'); });
 
     $(".main_menu a.nick_page6").click(function(e) { e.preventDefault(); hideGlobalBackButton(); transitionToSection('#menu-container .homepage', '#menu-container .contact', () => { loadMapScript(); }); });
-    $(".main_menu a.nick_homecontact").click(function(e) { e.preventDefault(); transitionToSection('#menu-container .contact', '#menu-container .homepage'); });
+    $(".main_menu a.nick_homecontact").click(function(e) { e.preventDefault(); hideGlobalBackButton(); transitionToSection('#menu-container .contact', '#menu-container .homepage'); });
 
     // MASTER UNIVERSAL STICKY BACK CLICK INTERACTION RE-ENGINEERED
     $(".nick-sticky-back-container a.nick_global_back_trigger").click(function(e) {
         e.preventDefault();
-        hideGlobalBackButton(); 
 
         if ($("#menu-2").is(":visible")) {
-            // Restore scroll settings before running layout switch animation
+            hideGlobalBackButton();
             $("body").removeClass("allow-scroll");
             $(".logocontainer").show();
             gsap.to(".logocontainer", { opacity: 1, duration: 0.3 });
             
-            transitionToSection('#menu-2', '#menu-container .homepage', function() {
+            gsap.to("#menu-2", { opacity: 0, y: -15, duration: 0.4, onComplete: () => {
+                $("#menu-2").hide();
                 if (poemScrollController) { poemScrollController.destroy(true); poemScrollController = null; }
-            });
+                
+                $("#menu-container").show();
+                gsap.set("#menu-container", { opacity: 0, y: 15 });
+                gsap.set("#menu-container .content", { display: "none" });
+                gsap.set("#menu-container .homepage", { display: "block", opacity: 1 });
+                gsap.to("#menu-container", { opacity: 1, y: 0, duration: 0.4 });
+            }});
         } else {
+            hideGlobalBackButton();
             var activeSection = $("#menu-container .content").not(".homepage").filter(":visible");
             if(activeSection.length > 0) {
                 transitionToSection(activeSection, '#menu-container .homepage');
@@ -356,7 +374,7 @@ jQuery(document).ready(function($) {
         }
     });
 
-    // Slider track adjustments
+    // Slider track navigation mechanics
     $(".nick-dot").on("click", function() {
         var slideIndex = $(this).data("slide");
         gsap.to(".nick-stories-slider-track", { xPercent: -(slideIndex * 50), duration: 0.6, ease: "power2.out" });
@@ -384,6 +402,8 @@ jQuery(document).ready(function($) {
 
     $(".story-select-btn").on("click", function(e) {
         e.preventDefault();
+        hideGlobalBackButton(); // BUG FIX: Enforces back button hiding inside the individual story book view panel context
+
         const targetStoryToken = $(this).attr("data-story");
         $(".story-instance-data").hide();
         $(`#${targetStoryToken}-data`).show();
@@ -440,7 +460,133 @@ jQuery(document).ready(function($) {
 
     $("#close-story-reader").on("click", function() {
         $("#story-reader").off("wheel touchstart touchend");
+        hideGlobalBackButton(); // Safety clamp fallback hook assurance
         gsap.to("#story-reader", { opacity: 0, display: "none", duration: 0.3 });
+    });
+
+    // =====================================================================
+    // PART 6: HIGH-PERFORMANCE IMMERSIVE POEM UNROLL READER CORE
+    // =====================================================================
+    const poemDatabase = {
+        "poem-1": {
+            title: "Fallen Rose",
+            text: "<p>The petals descend in silent grace,</p><p>Leaving a scar on winter's face.</p><p>A crimson memory lost in snow,</p><p>Where freezing winds of sorrow blow.</p><p>Yet deep beneath the frozen ground,</p><p>A quiet resilience can be found.</p><p>To bloom again when shadows part,</p><p>And spring unlocks the dreaming heart.</p>"
+        },
+        "poem-2": {
+            title: "Midnight Shadows",
+            text: "<p>The streetlamp casts a lonely gleam,</p><p>Upon the fragments of a dream.</p><p>The city sleeps, the world is still,</p><p>As shadows dance across the sill.</p><p>A rhythmic study of night skies,</p><p>Where hidden architecture lies.</p><p>We walk along the edge of time,</p><p>In search of reason and of rhyme.</p>"
+        }
+    };
+
+    const modalView = document.querySelector('#poem-modal-reader');
+    const modalScrollerContent = modalView.querySelector('.poem-scroll-scroll-content');
+    const modalArticleCell = modalView.querySelector('.poem-scroll-article');
+    
+    let modalScrollTriggerInstance = null;
+
+    $('.poem-grid-trigger-wrapper').on('click', '.poem-showcase-card', function(e) {
+        e.preventDefault();
+        const targetedId = $(this).attr('data-poem-id');
+        const databaseRecord = poemDatabase[targetedId];
+        
+        if (!databaseRecord) return;
+
+        document.getElementById('active-modal-poem-title').textContent = databaseRecord.title;
+        document.getElementById('active-modal-poem-text').innerHTML = databaseRecord.text;
+
+        $('body, html').css({ 'overflow': 'hidden', 'height': '100%' });
+        hideGlobalBackButton(); // KEEP: Explicitly hides button when unrolling an individual poem
+
+        gsap.set(modalView, { display: "block", opacity: 0 });
+        gsap.to(modalView, { opacity: 1, duration: 0.4, onComplete: function() {
+            buildPoemRollTimeline();
+        }});
+    });
+
+    function buildPoemRollTimeline() {
+        if (modalScrollTriggerInstance) { modalScrollTriggerInstance.destroy(true); }
+        modalScrollerContent.scrollTop = 0;
+
+        const rollTimeline = gsap.timeline()
+            .to(modalArticleCell, {
+                '--clip-reveal-delta': `${modalArticleCell.offsetHeight + 60}px`,
+                '--crease-scale-y': 1,
+                '--crease-opacity': 1,
+                duration: 1,
+                ease: 'none'
+            });
+
+        modalScrollTriggerInstance = ScrollTrigger.create({
+            animation: rollTimeline,
+            trigger: '.poem-scroll-article',
+            scroller: modalScrollerContent, 
+            scrub: true,
+            start: "top top+=100",
+            end: "bottom top+=40",
+            onUpdate: self => {
+                if (modalScrollerContent.scrollTop > 600) {
+                    modalScrollerContent.scrollTop = 600;
+                }
+            }
+        });
+        
+        ScrollTrigger.refresh();
+    }
+
+    $('#close-poem-modal-reader').off('click').on('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    
+        gsap.killTweensOf(modalView);
+    
+        if (typeof ScrollTrigger !== 'undefined') {
+    
+            ScrollTrigger.getAll().forEach(trigger => {
+                try {
+    
+                    const scroller =
+                        typeof trigger.scroller === 'function'
+                            ? trigger.scroller()
+                            : null;
+    
+                    if (scroller === modalScrollerContent) {
+                        trigger.kill();
+                    }
+    
+                } catch(err) {
+                    console.error(err);
+                }
+            });
+        }
+    
+        if (modalScrollTriggerInstance) {
+            modalScrollTriggerInstance.kill();
+            modalScrollTriggerInstance = null;
+        }
+    
+        if (modalScrollerContent) {
+            modalScrollerContent.scrollTop = 0;
+        }
+    
+        gsap.to(modalView, {
+            opacity: 0,
+            duration: 0.3,
+            onComplete: function() {
+    
+                gsap.set(modalView, {
+                    display: "none"
+                });
+    
+                $('html, body').css({
+                    overflow: '',
+                    height: '',
+                    'overflow-x': '',
+                    'overflow-y': ''
+                });
+    
+                $('.nick-sticky-back-container').show();
+            }
+        });
     });
 });
 
