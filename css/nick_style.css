@@ -1,0 +1,472 @@
+/*======================================================================
+    NICK MASTER PORTFOLIO COMPREHENSIVE COMBINED CORE CSS SHEET
+======================================================================*/
+
+html, body {
+    font-family: Tahoma, Arial; 
+    padding: 0px; 
+    margin: 0px; 
+    color: #333333;
+    background: #333333;
+    font-size: 16px;
+    overflow-x: hidden;
+}
+img { width: 100%; height: auto; display: block; }
+a { color: #ffffff; outline: 0; }
+a:hover, a:focus { text-decoration: none; color: #cccccc; }
+p { color: #333333; }
+h1, h2, h3, h4, h5, h6 { font-family: Tahoma, Arial; font-weight: 400; }
+
+/* --- BRAND HEADER ENGINE --- */
+h1 {   
+    font-size: 3em; 
+    color: #cccccc; 
+    background: transparent !important; 
+    padding: 0px !important; 
+    float: none !important; 
+    text-shadow: 4px 2px 2px rgba(33, 33, 33, 1); 
+    margin: 0 0 8px 0 !important; 
+    display: block !important;
+}
+
+.logocontainer {
+    width: 100% !important;
+    max-width: 1140px; 
+    margin: 0 auto !important;
+    padding: 30px 15px 10px 15px !important;
+    text-align: left; 
+    box-sizing: border-box !important;
+}
+
+h2 { font-size: 24px; color: #333333; margin-top: 0px; }
+h3 { text-align: center; font-size: 2em; }
+
+.clear { clear: both; }
+.content { display: none; height: auto; }
+.homepage { display: block; }
+.portfolioshow { display: block; }
+
+/* NAVIGATION LINKS FLEXBOX ALIGNMENT */
+.nick_link, .nick_linkservice, .nick_linkcontact { 
+    font-size: 2em; 
+    color: #ffffff; 
+    width: 100% !important; 
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+}
+
+.nick_smalltitle { 
+    float: none !important; 
+    padding: 0px !important; 
+    font-size: 1em; 
+    color: #b5b5b5;
+    margin: 0 0 20px 0 !important; 
+    display: block !important;
+}
+.nick_footer { text-align: center !important; font-size: 14px; color: #b5b5b5; margin: 30px auto 60px auto !important; clear: both; }
+
+/*======================================================================
+    RE-ENGINEERED CONTAINER TILES WITH DYNAMIC FLUID TEXTURES
+======================================================================*/
+
+.nick_mainservice,
+.nick_mainportfolio,
+.nick_maintesti,
+.nick_mainabout,
+.nick_maincontact,
+.nick_portfolioback {
+    background-repeat: no-repeat !important;
+    background-size: 100% 100% !important; 
+    background-position: center center !important;
+    text-align: center !important;
+    width: 100% !important;
+    display: block !important;
+    box-sizing: border-box !important;
+    float: none !important; 
+}
+
+/* Background image texture assignments for navigation buttons */
+.nick_mainservice   { background-image: url('../images/background_gold.png') !important; }
+.nick_mainportfolio { background-image: url('../images/background_red.png') !important; }
+.nick_maintesti     { background-image: url('../images/background_green.png') !important; }
+.nick_mainabout     { background-image: url('../images/background_blue.png') !important; }
+.nick_maincontact   { background-image: url('../images/background_purple.png') !important; }
+.nick_portfolioback { background-image: url('../images/background_white.png') !important; }
+
+.nick_graybg { float: left; background: #cccccc; overflow: hidden; width: 100%; }
+.nick_paddinggap { padding: 30px; }
+.nick_frame { float: left; overflow-x:hidden; margin-top: 30px; }
+
+/*======================================================================
+    RESTORED GLOBAL GRID IMAGE CONTAINER STYLING RULES
+======================================================================*/
+
+.nick_mainimg {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    background-repeat: no-repeat !important;
+    background-size: 100% 100% !important; 
+    background-position: center center !important;
+    display: block !important;
+}
+
+/* Structural masonry grid background images */
+.nick_grid_bg_large { background-image: url('../images/img_bg.png') !important; }
+.nick_grid_bg_small { background-image: url('../images/bg_img_sml.png') !important; }
+
+/* Restored fluid native style parameters for all standard image tags */
+.nick_mainimg img {
+    width: 100% !important;
+    height: auto !important;
+    display: block !important;
+}
+
+/* Restored image alignment variables for home layout cards */
+.nick_mainimg .nick-foreground-graphic {
+    width: 100% !important;
+    height: auto !important;
+    /*display: block !important;*/
+    /* FIXED: Uses Flexbox centering and safety padding so the graphic never extends to the edge */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 10px 10px !important; 
+}
+
+/* --- LIGHTBOX WIDGET ELEMENTS --- */
+#lightbox {
+  cursor: pointer; position: fixed; width: 100%; height: 100%; top: 0; left: 0;
+  background: rgba(0, 0, 0, 0.75); z-index: 9999999;
+}
+#lightbox img { display: block; position: absolute; box-shadow: 0 0 20px #000; }
+.lightbox-loading { width: 31px; height: 31px; position: absolute; top: 50%; left: 50%; margin: -16px 0 0 -16px; background: url(../images/loading.gif) no-repeat; }
+.lightbox-caption { position: absolute; left: 0; bottom: 0; width: 100%; text-align: center; background: rgba(0, 0, 0, 0.75); padding: 10px; color: #fff; }
+.lightbox-button { position: absolute; z-index: 99999; width: 32px; height: 32px; opacity: 0.6; transition: all 0.2s; }
+.lightbox-button:hover { opacity: 1; transform: scale(1.2); }
+.lightbox-close { right: 30px; top: 30px; background-image: url("../images/close.png"); }
+.lightbox-next { right: 30px; top: 50%; background-image: url("../images/next.png"); }
+.lightbox-previous { left: 30px; top: 50%; background-image: url("../images/previous.png"); }
+
+/* --- EASY RESPONSIVE TABS ENGINE --- */
+ul.resp-tabs-list { margin: 0px; padding: 0px; }
+.resp-tabs-list li { font-weight: 600; font-size: 13px; display: inline-block; padding: 13px 15px; margin: 0; list-style: none; cursor: pointer; float: left; }
+.resp-tabs-container { padding: 0px; background-color: #fff; clear: left; }
+h2.resp-accordion { cursor: pointer; display: none; height: 90px; line-height: 90px; text-indent: 15px; margin: 0; }
+.resp-tab-content { display: none; padding: 0px; border: 1px solid #c1c1c1; }
+.resp-tab-active { background-color: #fff; }
+.resp-content-active, .resp-accordion-active { display: block; }
+.resp-vtabs ul.resp-tabs-list { float: left; width: 30%; }
+.resp-vtabs .resp-tabs-list li { display: block; float: none; }
+.resp-vtabs .resp-tabs-container { float: left; width: 68%; min-height: 250px; border: 1px solid #c1c1c1; }
+@media only screen and (max-width: 992px) {
+    ul.resp-tabs-list { display: none; }
+    h2.resp-accordion { display: block; margin-bottom: 20px; }
+    .resp-vtabs .resp-tabs-container { width: 100%; float: none; }
+}
+
+/*======================================================================
+    RESTORED RESPONSIVE VIEWPORT HEIGHT LAYOUT BREAKPOINTS
+======================================================================*/
+
+/* --- GLOBAL SIZES (MOBILE / SMARTPHONES) --- */
+@media(min-width:320px) {
+    .nick_leftgap { padding: 0px 4px !important; }
+    .nick_botgap { margin-bottom: 12px !important; }
+    
+    .nick_mainservice, 
+    .nick_mainportfolio, 
+    .nick_maintesti, 
+    .nick_mainabout, 
+    .nick_mainimg,
+    .nick_portfolioback,
+    .nick_maincontact { 
+        margin-bottom: 12px !important; 
+    }
+    
+    .nick_insideportfolio { height: auto; padding-bottom: 15px; }
+    .homepage .container .col-sm-6 { float: left !important; width: 50% !important; }
+    
+    .nick_link { 
+        font-size: 1.1rem; 
+        height: auto !important; 
+        min-height: 84px !important; 
+        line-height: normal !important; 
+        padding: 25px 10px !important;
+    }
+    .nick_link a { display: block; width: 100%; height: 100%; }
+}
+
+/* --- TABLET SCREEN TARGETS --- */
+@media(min-width: 600px) and (max-width: 991px) {
+    .homepage .container { display: flex !important; flex-wrap: wrap !important; justify-content: center !important; max-width: 720px; margin: 0 auto; }
+    .homepage .container .col-sm-6 { width: 50% !important; float: none !important; display: inline-block !important; padding: 0 6px !important; }
+    
+    .nick_mainservice, 
+    .nick_mainportfolio, 
+    .nick_maintesti, 
+    .nick_mainabout, 
+    .nick_mainimg,
+    .nick_portfolioback,
+    .nick_maincontact {
+        margin-bottom: 12px !important;
+    }
+    
+    .nick_link { 
+        height: auto !important; 
+        min-height: 110px !important; 
+        line-height: normal !important; 
+        font-size: 1.5rem !important;
+        padding: 35px 10px !important;
+    }
+}
+
+/* --- DESKTOP VIEWPORTS --- */
+@media(min-width:992px) {
+    html, body { overflow: hidden !important; height: 100% !important; }
+    .homepage .container { display: block !important; width: 940px !important; margin: 20px auto 0 auto !important; }
+    .homepage .container .col-sm-6 { float: left !important; width: 25% !important; padding: 0 6px !important; }
+    
+    .nick_mainservice, 
+    .nick_mainportfolio, 
+    .nick_maintesti, 
+    .nick_mainabout, 
+    .nick_mainimg,
+    .nick_portfolioback,
+    .nick_maincontact {
+        margin-bottom: 12px !important;
+    }
+
+    .nick_link { 
+        height: auto !important; 
+        min-height: 120px !important; 
+        line-height: normal !important; 
+        font-size: 1.6em !important; 
+        padding: 40px 15px !important;
+    }
+    .nick_insideportfolio { height: 260px; }
+}
+
+/* --- LARGE MONITORS --- */
+@media(min-width:1200px) {
+    .homepage .container { width: 1140px !important; margin: 30px auto 0 auto !important; }
+    .homepage .container .col-sm-6 { padding: 0px 8px !important; }
+    
+    .nick_mainservice, 
+    .nick_mainportfolio, 
+    .nick_maintesti, 
+    .nick_mainabout, 
+    .nick_mainimg,
+    .nick_portfolioback,
+    .nick_maincontact {
+        margin-bottom: 16px !important;
+    }
+    
+    .nick_link { 
+        height: auto !important; 
+        min-height: 145px !important; 
+        line-height: normal !important; 
+        font-size: 1.8em !important; 
+        padding: 50px 20px !important;
+    }
+    .nick_insideportfolio { height: 316px; }
+}
+
+/* --- IMMERSIVE OVERLAY READER (BOOK-TURNING MECHANICS) --- */
+#story-reader {
+    position: fixed !important; top: 0; left: 0; width: 100vw !important; height: 100vh !important;
+    background-color: rgba(14, 14, 14, 0.98) !important; z-index: 999999 !important;
+    display: none; flex-direction: column !important; justify-content: center !important; align-items: center !important;
+}
+.nick-story-scroller-container {
+    width: 92vw !important; max-width: 1100px !important; height: 82vh !important; max-height: 750px !important;
+    border: 1px solid #D1B200; overflow: hidden !important; position: relative; background: #111111; perspective: 1500px;
+}
+.nick-story-content-track, .story-instance-data, .nick-story-section { position: relative !important; width: 100% !important; height: 100% !important; }
+.nick-page-panel { position: absolute !important; top: 0; left: 0; width: 100% !important; height: 100% !important; transform-origin: left center; z-index: 1; }
+.story-full-image-box, .story-full-image-box img { width: 100% !important; height: 100% !important; object-fit: cover !important; }
+.story-full-text-box { width: 100% !important; height: 100% !important; padding: 40px 35px !important; background: #1e1e1e; overflow-y: auto !important; }
+.story-full-text-box h3 { font-size: 1.85rem !important; color: #D1B200 !important; margin-bottom: 25px !important; }
+.story-full-text-box p { font-size: 1.15rem !important; line-height: 1.90 !important; color: #dfdfdf !important; text-align: justify; }
+#close-story-reader { padding: 12px 35px !important; border: 1px solid #D1B200 !important; background: transparent !important; color: #D1B200 !important; cursor: pointer; }
+#close-story-reader:hover { background: #D1B200 !important; color: #111111 !important; }
+
+/* --- STORIES ENGINE SLIDER VIEWPORT --- */
+.nick-stories-slider-viewport { width: 100% !important; overflow: hidden !important; position: relative; clear: both; }
+.nick-stories-slider-track { display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; width: 200% !important; }
+.nick-stories-slider-page { width: 50% !important; float: left; }
+.nick-stories-slider-page::after { content: ""; display: table; clear: both; }
+
+@media(max-width: 991px) {
+    .portfolio-grid-container .container { display: block !important; width: 100% !important; padding: 0 15px !important; }
+    .nick-stories-slider-page .col-sm-6 { float: left !important; width: 50% !important; padding: 0 4px !important; }
+}
+@media (min-width: 600px) and (max-width: 991px) {
+    .portfolio-grid-container .nick-stories-slider-page .col-sm-6 { width: 50% !important; float: left !important; padding: 0 6px !important; }
+    .portfolio-grid-container .nick-stories-slider-page .nick_link { height: 110px !important; line-height: 110px !important; font-size: 1.5rem !important; }
+    .portfolio-grid-container .nick-stories-slider-page .nick_mainservice, .portfolio-grid-container .nick-stories-slider-page .nick_mainportfolio, .portfolio-grid-container .nick-stories-slider-page .nick_portfolioback, .portfolio-grid-container .nick-stories-slider-page .nick_mainimg { margin-bottom: 12px !important; }
+}
+
+@media (min-width: 992px) {
+    .portfolio-grid-container .nick-stories-slider-page { display: block !important; width: 100% !important; clear: both; }
+    .portfolio-grid-container .nick-stories-slider-page .col-md-3 { padding-left: 6px !important; padding-right: 6px !important; box-sizing: border-box !important; }
+    .portfolio-grid-container .nick-stories-slider-page:nth-child(2) .col-md-3:nth-child(3) { clear: none !important; float: left !important; }
+}
+
+.nick-stories-dots-container { text-align: center !important; margin: 25px auto 0 auto !important; width: 100% !important; }
+.nick-dot { display: inline-block !important; width: 12px !important; height: 12px !important; margin: 0 6px !important; background: #555555 !important; border-radius: 50% !important; cursor: pointer; }
+.nick-dot.active { background: #D1B200 !important; transform: scale(1.3); }
+
+/*======================================================================
+    LOCALIZED SCROLLMAGIC POEM TARGETING MATRICES (SCOPED ENVIRONMENT)
+======================================================================*/
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Nanum+Pen+Script&family=Roboto&display=swap');
+
+.o-page {
+  overflow: hidden;
+  width: 100% !important;
+  background-color: hsla(52, 40%, 96%, 1.00);
+}
+
+.o-main {
+  margin: 0 auto;
+  max-width: 37.5rem; 
+  padding: 1.25rem;
+}
+
+.o-container {
+  margin: 1.25rem 0;
+}
+
+.o-container p {
+  margin: 1.25rem 0 !important;
+  opacity: 0;
+  transform: translateY(20px);
+  font-family: 'Roboto', sans-serif;
+  font-size: 0.875rem;
+  color: #404040 !important;
+  text-align: left !important;
+}
+
+/* Author Headings Styles */
+.c-author {
+  font-size: 3.75rem;
+  filter: url('#liquify');
+  opacity: 0;
+  text-align: center;
+  transform: translateY(50px);
+}
+
+.c-author__korean {
+    font-family: 'Nanum Pen Script', cursive;
+    font-size: 6.25rem;
+    font-weight: 400;
+    color: #000000 !important;
+    text-transform: capitalize; /* Ensures title parses smoothly */
+  }
+  
+  .c-author__english {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.25rem;
+    color: #555555 !important;
+    letter-spacing: 1px;
+    font-weight: 300;
+    margin-top: 5px;
+  }
+
+/* FIXED: Restricted selection strictly inside the isolated .o-page component */
+.o-page .c-transition {
+  height: 250px;
+  width: 400px;
+  margin: 5rem 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.o-page .c-transition::before {
+  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/204808/ink-photo-frame.png');
+  background-size: 100% 100%;
+  background-position: 50% 50%;
+  content: '';
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 3;
+}
+
+.o-page .c-transition::after {
+  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/204808/ink-transition-sprite.png');
+  background-size: 100% 100%;
+  content: '';
+  height: 100%;
+  left: 50%;
+  position: absolute;
+  top: 0;
+  transform: translateX(-1.25%);
+  width: 4000%;
+  z-index: 2;
+}
+
+.o-page .c-transition.is-active::after {
+  animation: ink-transition-animation 2s steps(39) 0.5s forwards;
+}
+
+.o-page .c-transition--portrait {
+  height: 400px;
+  width: 250px;
+}
+
+.o-page .c-transition--portrait::before {
+  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/204808/ink-photo-frame-portrait.png');
+}
+
+.o-page .c-transition--large {
+  height: 375px;
+  width: 600px;
+}
+
+.o-page .c-transition--center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* FIXED: Restricted opacity transformations strictly to your internal custom canvas graphics */
+.o-page .c-transition__img {
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+.o-page .c-transition.is-active .c-transition__img {
+  opacity: 1;
+}
+
+.o-page .c-transition--img-top .c-transition__img {
+  object-position: 50% 0;
+}
+
+.c-stamp {
+  display: block;
+  margin: 0 auto;
+  width: 2rem;
+}
+
+.u-korean {
+  font-family: 'Nanum Gothic', sans-serif !important;
+}
+
+.u-spacing-top-small {
+  margin-top: -0.9375rem !important;
+}
+
+@keyframes ink-transition-animation {
+  0% { transform: translateX(-1.25%); }
+  99% { transform: translateX(-98.75%); opacity: 1; }
+  100% { transform: translateX(-98.75%); opacity: 0; }
+}
