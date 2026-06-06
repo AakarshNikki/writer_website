@@ -203,18 +203,15 @@
 // =====================================================================
 jQuery(document).ready(function($) {
 
-    // Variable hook to hold the ScrollMagic controller instance
     let poemScrollController = null;
 
     function initPoemRevealEngine() {
-        // Destroy existing instance if it exists to allow fresh re-calculation
         if (poemScrollController) { poemScrollController.destroy(true); }
 
         const liquifyTrigger = document.querySelector('.js-liquify-trigger');
         const textTriggers = [...document.querySelectorAll('.o-container p')];
         const inkTriggers = [...document.querySelectorAll('.js-ink-trigger')];
 
-        // Instantiate ScrollMagic controller dynamically now that panel elements have structural size
         poemScrollController = new ScrollMagic.Controller();
          
         new ScrollMagic.Scene({
@@ -282,34 +279,45 @@ jQuery(document).ready(function($) {
         })
         .to(incomingSelector, {
             opacity: 1, y: 0,
-            onComplete: () => { if (typeof onCompleteCallback === "function") onCompleteCallback(); }
+            onComplete: () => { 
+                if (typeof onCompleteCallback === "function") onCompleteCallback(); 
+                // Recalculates viewport bounds dynamically when section is revealed
+                if (typeof ScrollTrigger !== 'undefined') { ScrollTrigger.refresh(); }
+            }
         });
     }
 
-    // Navigation Click Mappings// Navigation Click Mappings Updated for Header Control
+    function showGlobalBackButton() {
+        gsap.killTweensOf(".nick-sticky-back-container");
+        $(".nick-sticky-back-container").show();
+        gsap.to(".nick-sticky-back-container", { opacity: 1, scale: 1, duration: 0.4, ease: "power2.out" });
+    }
+
+    function hideGlobalBackButton() {
+        gsap.killTweensOf(".nick-sticky-back-container");
+        gsap.to(".nick-sticky-back-container", { 
+            opacity: 0, scale: 0.7, duration: 0.3, ease: "power2.in",
+            onComplete: () => $(".nick-sticky-back-container").hide() 
+        });
+    }
+
     $(".main_menu a.nick_page2").click(function(e) { 
         e.preventDefault(); 
-        // Seamlessly hides the main portfolio brand header over the poems panel canvas
+        showGlobalBackButton(); 
+        
+        // Hides brand header text elements over the standalone canvas panel view
         gsap.to(".logocontainer", { opacity: 0, duration: 0.3, onComplete: () => $(".logocontainer").hide() });
 
-        transitionToSection('#menu-container .homepage', '#menu-container .services', function() {
+        transitionToSection('#menu-container .homepage', '#menu-2', function() {
+            // LAPTOP SCROLL FIX: Toggle CSS rules after the grid fades out
+            $("body").addClass("allow-scroll");
             initPoemRevealEngine();
-        }); 
-    });
-    
-    $(".main_menu a.nick_homeservice").click(function(e) { 
-        e.preventDefault(); 
-        // Restores the main portfolio header when moving back home
-        $(".logocontainer").show();
-        gsap.to(".logocontainer", { opacity: 1, duration: 0.3 });
-
-        transitionToSection('#menu-container .services', '#menu-container .homepage', function() {
-            if (poemScrollController) { poemScrollController.destroy(true); poemScrollController = null; }
         }); 
     });
     
     $(".main_menu a.nick_page3").click(function(e) {
         e.preventDefault();
+        hideGlobalBackButton(); 
         transitionToSection('#menu-container .homepage', '#menu-container .portfolio', () => {
             gsap.set(".nick-stories-slider-track", { xPercent: 0 });
             $(".nick-dot").removeClass("active").first().addClass("active");
@@ -317,14 +325,36 @@ jQuery(document).ready(function($) {
     });
     $(".main_menu a.nick_homeportfolio").click(function(e) { e.preventDefault(); transitionToSection('#menu-container .portfolio', '#menu-container .homepage'); });
 
-    $(".main_menu a.nick_page4").click(function(e) { e.preventDefault(); transitionToSection('#menu-container .homepage', '#menu-container .testimonial'); });
+    $(".main_menu a.nick_page4").click(function(e) { e.preventDefault(); hideGlobalBackButton(); transitionToSection('#menu-container .homepage', '#menu-container .testimonial'); });
     $(".main_menu a.nick_hometestimonial").click(function(e) { e.preventDefault(); transitionToSection('#menu-container .testimonial', '#menu-container .homepage'); });
 
-    $(".main_menu a.nick_page5").click(function(e) { e.preventDefault(); transitionToSection('#menu-container .homepage', '#menu-container .about'); });
+    $(".main_menu a.nick_page5").click(function(e) { e.preventDefault(); hideGlobalBackButton(); transitionToSection('#menu-container .homepage', '#menu-container .about'); });
     $(".main_menu a.nick_homeabout").click(function(e) { e.preventDefault(); transitionToSection('#menu-container .about', '#menu-container .homepage'); });
 
-    $(".main_menu a.nick_page6").click(function(e) { e.preventDefault(); transitionToSection('#menu-container .homepage', '#menu-container .contact', () => { loadMapScript(); }); });
+    $(".main_menu a.nick_page6").click(function(e) { e.preventDefault(); hideGlobalBackButton(); transitionToSection('#menu-container .homepage', '#menu-container .contact', () => { loadMapScript(); }); });
     $(".main_menu a.nick_homecontact").click(function(e) { e.preventDefault(); transitionToSection('#menu-container .contact', '#menu-container .homepage'); });
+
+    // MASTER UNIVERSAL STICKY BACK CLICK INTERACTION RE-ENGINEERED
+    $(".nick-sticky-back-container a.nick_global_back_trigger").click(function(e) {
+        e.preventDefault();
+        hideGlobalBackButton(); 
+
+        if ($("#menu-2").is(":visible")) {
+            // Restore scroll settings before running layout switch animation
+            $("body").removeClass("allow-scroll");
+            $(".logocontainer").show();
+            gsap.to(".logocontainer", { opacity: 1, duration: 0.3 });
+            
+            transitionToSection('#menu-2', '#menu-container .homepage', function() {
+                if (poemScrollController) { poemScrollController.destroy(true); poemScrollController = null; }
+            });
+        } else {
+            var activeSection = $("#menu-container .content").not(".homepage").filter(":visible");
+            if(activeSection.length > 0) {
+                transitionToSection(activeSection, '#menu-container .homepage');
+            }
+        }
+    });
 
     // Slider track adjustments
     $(".nick-dot").on("click", function() {
@@ -333,7 +363,6 @@ jQuery(document).ready(function($) {
         $(".nick-dot").removeClass("active"); $(this).addClass("active");
     });
 
-    // Mobile nav visibility loops
     $("a.menu-toggle-btn").click(function(e) {
         e.preventDefault(); var drawer = $(".responsive_menu");
         if (drawer.is(":visible")) {
