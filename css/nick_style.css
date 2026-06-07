@@ -148,7 +148,7 @@ h3 { text-align: center; font-size: 2em; }
 .lightbox-button { position: absolute; z-index: 99999; width: 32px; height: 32px; opacity: 0.6; transition: all 0.2s; }
 .lightbox-button:hover { opacity: 1; transform: scale(1.2); }
 .lightbox-close { right: 30px; top: 30px; background-image: url("../images/close.png"); }
-.lightbox-next { right: 30px; top: 50%; background-image: url("../images/previous.png"); }
+.lightbox-next { right: 30px; top: 50%; background-image: url("../images/next.png"); }
 .lightbox-previous { left: 30px; top: 50%; background-image: url("../images/next.png"); }
 
 /* --- EASY RESPONSIVE TABS ENGINE --- */
@@ -226,12 +226,14 @@ h2.resp-accordion { cursor: pointer; display: none; height: 90px; line-height: 9
 
 /* --- DESKTOP VIEWPORTS BREAKPOINT ENGINE --- */
 @media(min-width:992px) {
+    /* FIXED SCROLL CORE RE-ENGINEERING: Stops the framework from locking the screen scrollbars */
     html, body { 
         overflow-y: auto !important; 
         overflow-x: hidden !important; 
         height: auto !important; 
     }
     
+    /* Clamps only the home dashboard layout grid from spilling over */
     #menu-container {
         width: 100% !important;
         position: relative !important;
@@ -337,7 +339,7 @@ h2.resp-accordion { cursor: pointer; display: none; height: 90px; line-height: 9
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Nanum+Pen+Script&family=Roboto&display=swap');
 
 .o-page {
-  overflow: visible !important; 
+  overflow: visible !important; /* FIXED: Unlocks length parsing constraints */
   width: 100% !important;
   background-color: hsla(52, 40%, 96%, 1.00);
 }
@@ -438,14 +440,6 @@ h2.resp-accordion { cursor: pointer; display: none; height: 90px; line-height: 9
 .o-page .c-transition--large {
   height: 375px;
   width: 600px;
-}
-
-.o-page .c-transition--large img {
-  height: 100%;
-  object-fit: cover;
-  opacity: 0;
-  width: 100%;
-  z-index: 1;
 }
 
 .o-page .c-transition--center {
@@ -577,6 +571,7 @@ h2.resp-accordion { cursor: pointer; display: none; height: 90px; line-height: 9
 /*======================================================================
     DYNAMIC VIEWPORT CANVAS OVERRIDES (POEMS STANDALONE ACTIVE)
 ======================================================================*/
+/* Forces the standalone container layer to take full scroll ownership */
 #menu-2.standalone-poems-canvas {
     overflow: visible !important;
     height: auto !important;
@@ -749,4 +744,103 @@ h2.resp-accordion { cursor: pointer; display: none; height: 90px; line-height: 9
     background: #ffffff !important;
     color: #111111 !important;
     transform: translateX(-50%) scale(1.05) !important;
+}
+
+/*======================================================================
+    ISOLATED MISC GALLERY PARALLAX SECTION STYLES
+======================================================================*/
+
+/* --- MISC SECTION PARALLAX OVERRIDES --- */
+/* FORCE OVERRIDE: Scoped strictly to the Misc section */
+/* --- 3D PARALLAX MISC ENGINE --- */
+#menu-4 .misc-main {
+    background-color: #120605;
+    overflow-x: hidden;
+    padding-top: 100px;
+}
+
+#menu-4 .misc-content__item {
+    min-height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1200px; /* The "camera" distance */
+    margin-bottom: 20vh;
+}
+
+#menu-4 .misc-content__item-imgwrap {
+    width: 60%;
+    transform-style: preserve-3d; /* Key for 3D movement */
+    will-change: transform;
+}
+
+#menu-4 .misc-content__item-img {
+    width: 100%;
+    height: 450px;
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 30px 50px rgba(0,0,0,0.6);
+    /* Initial state before GSAP takes over */
+    transform-origin: 50% 50%;
+}
+
+#menu-4 .misc-content__item-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 8rem;
+    color: #fff;
+    position: absolute;
+    bottom: -50px;
+    right: 50px;
+    z-index: 5;
+}
+
+.misc-content__item-description {
+    color: var(--color-description);
+    padding: 1rem 0;
+}
+
+/* Layout variation for expanded items */
+#menu-4 .misc-content__item--expand {
+    width: 100%;
+    grid-template-columns: minmax(0, 600px) 1fr;
+}
+
+#menu-4 .misc-content__item--expand:nth-child(even) {
+    grid-template-columns: 1fr minmax(0, 600px);
+}
+
+/* Specific Grid Positioning */
+#menu-4 .misc-content__item--expand .misc-content__item-imgwrap {
+    grid-area: 1 / 1 / 3 / 2;
+}
+
+#menu-4 .misc-content__item--expand:nth-child(even) .misc-content__item-imgwrap {
+    grid-area: 1 / 2 / 3 / 3;
+    justify-self: end;
+}
+
+#menu-4 .misc-content__item--expand .misc-content__item-description {
+    grid-area: 1 / 2 / 3 / 3;
+    justify-self: start;
+    align-self: start;
+    padding: 0 2rem;
+    width: 250px;
+    font-size: 0.9rem;
+}
+
+@media screen and (max-width: 40em) {
+    #menu-4 .misc-content__item {
+        grid-template-columns: 100% !important;
+    }
+    
+    #menu-4 .misc-content__item-imgwrap {
+        grid-area: 1 / 1 / 3 / 3 !important;
+    }
+    
+    #menu-4 .misc-content__item-description {
+        grid-area: 3 / 1 / 4 / 3 !important;
+        padding: 1rem 0;
+        width: 100%;
+        text-align: left;
+    }
 }

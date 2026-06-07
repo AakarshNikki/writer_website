@@ -7,14 +7,16 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/font-awesome.min.css" rel="stylesheet">
     <link href="css/nick_style.css" rel="stylesheet"> 
+    
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Righteous&display=swap" rel="stylesheet">
         
     <script src="js/jquery-1.10.2.min.js"></script> 
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenMax.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/ScrollMagic.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/plugins/animation.gsap.js"></script>
-
-
+    
+    <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
   </head>
   <body>
     <div class="logocontainer">
@@ -71,7 +73,7 @@
         </div>
       </div>
 	    
-      <div class="content portfolio portfolio-grid-container" id="menu-3" style="display: none;">
+      <div class="content portfolio" id="menu-3" style="display: none;">
         <div class="container">
           <div class="nick-stories-slider-viewport">
             <div class="nick-stories-slider-track">
@@ -136,7 +138,6 @@
 
             </div>
           </div>
-
           <div class="nick-stories-dots-container">
             <span class="nick-dot active" data-slide="0"></span>
             <span class="nick-dot" data-slide="1"></span>
@@ -144,64 +145,56 @@
         </div>
      </div>
 
-     <div class="content testimonial" id="menu-4">
-        <div class="container">
-          <div class="row nick_bordergapborder">
-            <div id="cmt">
-              <div class="col-md-3 col-sm-12 nick_leftgap_about">
-                <ul class="resp-tabs-list nick_testitab">
-                  <li>Testimonials</li>
-                  <li>Special Awards</li>
-                  <li>Recognitions</li>
-                </ul>
-                <div class="nick_aboutlinkwrapper">
-                  <div class="nick_link"><a class="show-1 nick_hometestimonial" href="index.html">Go Back</a></div>
-                </div>
-              </div>
-              <div class="resp-tabs-container nick_testicontainer">
-                <div>
-                  <div class="nick_col50 nick_rightgap_about">
-                    <div class="nick_graybg nick_botgap">
-                      <div class="nick_frame">
-                        <h2>Testimonials</h2>
-                        <p>Aliquam accumsan, mauris ut hendrerit vehicula, elit massa facilisis nulla, ut auctor risus massa non elit...</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="nick_col50 nick_leftgap nick_botgap"><img src="images/templatemo_testimonial1.jpg" alt="testimonial"></div>
-                </div>
-                <div>
-                  <div class="nick_col50 nick_rightgap_about">
-                    <div class="nick_graybg nick_botgap">
-                      <div class="nick_frame">
-                        <h2>Special Awards</h2>
-                        <p>Suspendisse eu nisl sit amet purus varius pellentesque quis id mi...</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="nick_col50 nick_leftgap nick_botgap"><img src="images/templatemo_testimonial2.jpg" alt="testimonial"></div>
-                </div>
-                <div>
-                  <div class="nick_col50 nick_leftgap_about">
-                    <div class="nick_graybg nick_botgap">
-                      <div class="nick_frame">
-                        <h2>Recognitions</h2>
-                        <p>Quisque convallis neque eu nunc dictum, eget vehicula ipsum rhoncus...</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="nick_col50 nick_leftgap nick_botgap"><img src="images/templatemo_testimonial3.jpg" alt="testimonial"></div>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-12 nick_leftgap nick_aboutlinkwrapper1">
-              <div class="nick_aboutback nick_botgap">
-                <div class="nick_link"><a class="show-1 nick_hometestimonial" href="#">Go Back</a></div>
-              </div>
-            </div>
+     <div class="content testimonial" id="menu-4" style="display: none;">
+      <div class="misc-main">
+          <div data-scroll class="misc-page">
+              <h1 class="misc-page__title">Miscellaneous</h1>
+              
+              <!-- Inside #menu-4 -->
+<div class="misc-content">
+  <!-- Item 1 -->
+  <div class="misc-content__item">
+      <div class="misc-content__item-imgwrap">
+          <div class="misc-content__item-img" style="background-image: url('https://images.pexels.com/photos/1642068/pexels-photo-1642068.jpeg');"></div>
+      </div>
+      <h2 class="misc-content__item-title">Leopard</h2>
+  </div>
+
+  <!-- Item 2 -->
+  <div class="misc-content__item">
+      <div class="misc-content__item-imgwrap">
+          <div class="misc-content__item-img" style="background-image: url('https://images.pexels.com/photos/208840/pexels-photo-208840.jpeg');"></div>
+      </div>
+      <h2 class="misc-content__item-title">Irbis</h2>
+  </div>
+
+  <!-- Item 3 -->
+  <div class="misc-content__item">
+      <div class="misc-content__item-imgwrap">
+          <div class="misc-content__item-img" style="background-image: url('https://images.pexels.com/photos/146067/pexels-photo-146067.jpeg');"></div>
+      </div>
+      <h2 class="misc-content__item-title">Tiger</h2>
+  </div>
+
+  <!-- Item 4 -->
+  <div class="misc-content__item">
+      <div class="misc-content__item-imgwrap">
+          <div class="misc-content__item-img" style="background-image: url('https://images.pexels.com/photos/247502/pexels-photo-247502.jpeg');"></div>
+      </div>
+      <h2 class="misc-content__item-title">Lion</h2>
+  </div>
+
+  <!-- Item 5 -->
+  <div class="misc-content__item">
+      <div class="misc-content__item-imgwrap">
+          <div class="misc-content__item-img" style="background-image: url('https://images.pexels.com/photos/2544554/pexels-photo-2544554.jpeg');"></div>
+      </div>
+      <h2 class="misc-content__item-title">Cheetah</h2>
+  </div>
+</div>
           </div>
-        </div>
-     </div>
+      </div>
+  </div>
     
      <div class="content about" id="menu-5">
         <div class="container">
@@ -400,6 +393,7 @@
                         <h3>Short Story 4 &bull; Chapter 1</h3>
                         <p>The marketplace echoed with dialects from three distant oceans...</p>
                       </div>
+
                     </div>
                   </section>
                 </div>
@@ -478,6 +472,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
     <script src="js/nick_script.js"></script>
   </body>
 </html>

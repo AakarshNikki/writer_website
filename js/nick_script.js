@@ -281,7 +281,7 @@ jQuery(document).ready(function($) {
             opacity: 1, y: 0,
             onComplete: () => { 
                 if (typeof onCompleteCallback === "function") onCompleteCallback(); 
-                if (typeof ScrollTrigger !== 'undefined') { ScrollTrigger.refresh(true); }
+                if (typeof ScrollTrigger !== 'undefined') { ScrollTrigger.refresh(); }
             }
         });
     }
@@ -300,50 +300,63 @@ jQuery(document).ready(function($) {
         });
     }
 
-    // Navigation Switch Toggles Mapped Cleanly
     $(".main_menu a.nick_page2").click(function(e) { 
         e.preventDefault(); 
-        showGlobalBackButton(); // KEEP: Enabled exclusively for Poems grid panel view
+        showGlobalBackButton(); 
         
-        gsap.to(".logocontainer.default-menu-footer", { opacity: 0, duration: 0.2 });
-        gsap.to(".logocontainer:not(.default-menu-footer)", { opacity: 0, duration: 0.3, onComplete: () => $(".logocontainer:not(.default-menu-footer)").hide() });
+        gsap.to(".logocontainer", { opacity: 0, duration: 0.3, onComplete: () => $(".logocontainer").hide() });
 
-        gsap.to("#menu-container", { opacity: 0, y: -15, duration: 0.4, onComplete: () => {
-            $("#menu-container").hide();
-            
-            $("#menu-2").css({ "display": "block", "opacity": "0", "transform": "translateY(15px)" });
-            gsap.to("#menu-2", { opacity: 1, y: 0, duration: 0.4, onComplete: () => {
-                $("body").addClass("allow-scroll");
-                initPoemRevealEngine();
-                window.scrollTo(0, 0);
-            }});
-        }});
+        transitionToSection('#menu-container .homepage', '#menu-2', function() {
+            $("body").addClass("allow-scroll");
+            initPoemRevealEngine();
+        }); 
     });
     
     $(".main_menu a.nick_page3").click(function(e) {
         e.preventDefault();
-        hideGlobalBackButton(); // BUG FIX: Explicitly hides arrow button when entering Stories grid shelf
+        hideGlobalBackButton(); // FIX: Explicitly strip button from Stories grid
         transitionToSection('#menu-container .homepage', '#menu-container .portfolio', () => {
             gsap.set(".nick-stories-slider-track", { xPercent: 0 });
             $(".nick-dot").removeClass("active").first().addClass("active");
         });
     });
 
-    // FIXED STORIES ACTION MAPPINGS PRESERVATION
+    $(".main_menu a.nick_page4").click(function(e) { 
+        e.preventDefault(); 
+        hideGlobalBackButton(); 
+        
+        transitionToSection('#menu-container .homepage', '#menu-4', () => {
+            // Wait for CSS animations/transitions to fully settle (500ms)
+            setTimeout(() => {
+                if (typeof initMiscEngine === 'function') {
+                    initMiscEngine();
+                    console.log("Misc Engine Engaged");
+                }
+            }, 500);
+        }); 
+    });
+
     $(".main_menu a.nick_homeportfolio").click(function(e) { 
         e.preventDefault(); 
         hideGlobalBackButton();
         transitionToSection('#menu-container .portfolio', '#menu-container .homepage'); 
     });
 
-    $(".main_menu a.nick_page4").click(function(e) { e.preventDefault(); hideGlobalBackButton(); transitionToSection('#menu-container .homepage', '#menu-container .testimonial'); });
     $(".main_menu a.nick_hometestimonial").click(function(e) { e.preventDefault(); hideGlobalBackButton(); transitionToSection('#menu-container .testimonial', '#menu-container .homepage'); });
-
-    $(".main_menu a.nick_page5").click(function(e) { e.preventDefault(); hideGlobalBackButton(); transitionToSection('#menu-container .homepage', '#menu-container .about'); });
+    $(".main_menu a.nick_page5").click(function(e) { e.preventDefault(); showGlobalBackButton(); transitionToSection('#menu-container .homepage', '#menu-container .about'); });
     $(".main_menu a.nick_homeabout").click(function(e) { e.preventDefault(); hideGlobalBackButton(); transitionToSection('#menu-container .about', '#menu-container .homepage'); });
-
-    $(".main_menu a.nick_page6").click(function(e) { e.preventDefault(); hideGlobalBackButton(); transitionToSection('#menu-container .homepage', '#menu-container .contact', () => { loadMapScript(); }); });
+    $(".main_menu a.nick_page6").click(function(e) { e.preventDefault(); showGlobalBackButton(); transitionToSection('#menu-container .homepage', '#menu-container .contact', () => { loadMapScript(); }); });
     $(".main_menu a.nick_homecontact").click(function(e) { e.preventDefault(); hideGlobalBackButton(); transitionToSection('#menu-container .contact', '#menu-container .homepage'); });
+
+    // CUSTOM BACK BUTTON FOR MISC SECTION
+    $(".misc-back-btn").click(function(e) {
+        e.preventDefault();
+        if (typeof miscSmoothScrollInstance !== 'undefined' && miscSmoothScrollInstance) {
+            miscSmoothScrollInstance.destroy();
+            miscSmoothScrollInstance = null;
+        }
+        transitionToSection('#menu-4', '#menu-container .homepage');
+    });
 
     // MASTER UNIVERSAL STICKY BACK CLICK INTERACTION RE-ENGINEERED
     $(".nick-sticky-back-container a.nick_global_back_trigger").click(function(e) {
@@ -355,16 +368,9 @@ jQuery(document).ready(function($) {
             $(".logocontainer").show();
             gsap.to(".logocontainer", { opacity: 1, duration: 0.3 });
             
-            gsap.to("#menu-2", { opacity: 0, y: -15, duration: 0.4, onComplete: () => {
-                $("#menu-2").hide();
+            transitionToSection('#menu-2', '#menu-container .homepage', function() {
                 if (poemScrollController) { poemScrollController.destroy(true); poemScrollController = null; }
-                
-                $("#menu-container").show();
-                gsap.set("#menu-container", { opacity: 0, y: 15 });
-                gsap.set("#menu-container .content", { display: "none" });
-                gsap.set("#menu-container .homepage", { display: "block", opacity: 1 });
-                gsap.to("#menu-container", { opacity: 1, y: 0, duration: 0.4 });
-            }});
+            });
         } else {
             hideGlobalBackButton();
             var activeSection = $("#menu-container .content").not(".homepage").filter(":visible");
@@ -374,7 +380,6 @@ jQuery(document).ready(function($) {
         }
     });
 
-    // Slider track navigation mechanics
     $(".nick-dot").on("click", function() {
         var slideIndex = $(this).data("slide");
         gsap.to(".nick-stories-slider-track", { xPercent: -(slideIndex * 50), duration: 0.6, ease: "power2.out" });
@@ -402,7 +407,7 @@ jQuery(document).ready(function($) {
 
     $(".story-select-btn").on("click", function(e) {
         e.preventDefault();
-        hideGlobalBackButton(); // BUG FIX: Enforces back button hiding inside the individual story book view panel context
+        hideGlobalBackButton(); // FIX: Explicitly strip button from individual stories
 
         const targetStoryToken = $(this).attr("data-story");
         $(".story-instance-data").hide();
@@ -460,7 +465,7 @@ jQuery(document).ready(function($) {
 
     $("#close-story-reader").on("click", function() {
         $("#story-reader").off("wheel touchstart touchend");
-        hideGlobalBackButton(); // Safety clamp fallback hook assurance
+        hideGlobalBackButton(); // Ensure it stays hidden upon returning to stories menu
         gsap.to("#story-reader", { opacity: 0, display: "none", duration: 0.3 });
     });
 
@@ -495,7 +500,6 @@ jQuery(document).ready(function($) {
         document.getElementById('active-modal-poem-text').innerHTML = databaseRecord.text;
 
         $('body, html').css({ 'overflow': 'hidden', 'height': '100%' });
-        hideGlobalBackButton(); // KEEP: Explicitly hides button when unrolling an individual poem
 
         gsap.set(modalView, { display: "block", opacity: 0 });
         gsap.to(modalView, { opacity: 1, duration: 0.4, onComplete: function() {
@@ -504,7 +508,7 @@ jQuery(document).ready(function($) {
     });
 
     function buildPoemRollTimeline() {
-        if (modalScrollTriggerInstance) { modalScrollTriggerInstance.destroy(true); }
+        if (modalScrollTriggerInstance) { modalScrollTriggerInstance.kill(); }
         modalScrollerContent.scrollTop = 0;
 
         const rollTimeline = gsap.timeline()
@@ -540,22 +544,11 @@ jQuery(document).ready(function($) {
         gsap.killTweensOf(modalView);
     
         if (typeof ScrollTrigger !== 'undefined') {
-    
             ScrollTrigger.getAll().forEach(trigger => {
                 try {
-    
-                    const scroller =
-                        typeof trigger.scroller === 'function'
-                            ? trigger.scroller()
-                            : null;
-    
-                    if (scroller === modalScrollerContent) {
-                        trigger.kill();
-                    }
-    
-                } catch(err) {
-                    console.error(err);
-                }
+                    const scroller = typeof trigger.scroller === 'function' ? trigger.scroller() : null;
+                    if (scroller === modalScrollerContent) { trigger.kill(); }
+                } catch(err) { console.error(err); }
             });
         }
     
@@ -564,30 +557,123 @@ jQuery(document).ready(function($) {
             modalScrollTriggerInstance = null;
         }
     
-        if (modalScrollerContent) {
-            modalScrollerContent.scrollTop = 0;
-        }
+        if (modalScrollerContent) { modalScrollerContent.scrollTop = 0; }
     
         gsap.to(modalView, {
             opacity: 0,
             duration: 0.3,
             onComplete: function() {
-    
-                gsap.set(modalView, {
-                    display: "none"
-                });
-    
-                $('html, body').css({
-                    overflow: '',
-                    height: '',
-                    'overflow-x': '',
-                    'overflow-y': ''
-                });
-    
-                $('.nick-sticky-back-container').show();
+                gsap.set(modalView, { display: "none" });
+                $('html, body').css({ overflow: '', height: '', 'overflow-x': '', 'overflow-y': '' });
             }
         });
     });
+
+    // =====================================================================
+    // PART 7: SCOPED MISC SECTION CUSTOM SMOOTH SCROLL ENGINE
+    // =====================================================================
+    // Add this inside your document.ready function or as a standalone
+    window.miscEngineInstance = null;
+
+    window.initMiscEngine = function() {
+        // 1. Clean up existing instances
+        if (window.miscEngineInstance) {
+            ScrollTrigger.getAll().filter(st => st.vars.trigger.closest('#menu-4')).forEach(st => st.kill());
+        }
+    
+        // 2. Select all items
+        const items = document.querySelectorAll("#menu-4 .misc-content__item");
+    
+        // 3. Apply the 3D Scrub effect with alternation
+        items.forEach((item, index) => {
+            const img = item.querySelector(".misc-content__item-img");
+            
+            // This line is the key: if index is even, multiplier is 1. If odd, it's -1.
+            const multiplier = (index % 2 === 0) ? 1 : -1;
+    
+            gsap.fromTo(img, 
+                { 
+                    rotateX: -30, 
+                    rotateY: -10 * multiplier, // Tilts Left for even, Right for odd
+                    scale: 0.8 
+                }, 
+                { 
+                    rotateX: 30,  
+                    rotateY: 10 * multiplier,  // Tilts Right for even, Left for odd
+                    scale: 1,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: item,
+                        start: "top bottom", 
+                        end: "bottom top",   
+                        scrub: 1.5,
+                        invalidateOnRefresh: true
+                    }
+                }
+            );
+        });
+        
+        ScrollTrigger.refresh();
+
+    
+
+    
+        class Item {
+            constructor(el) {
+                this.DOM = { el: el };
+                this.DOM.image = this.DOM.el.querySelector(".misc-content__item-img");
+                this.DOM.imageWrapper = this.DOM.image.parentNode;
+                this.DOM.el.style.perspective = "1000px";
+                this.DOM.imageWrapper.style.transformOrigin = "50% 100%";
+                this.ry = MathUtils.getRandomFloat(-0.5, 0.5);
+                this.rz = MathUtils.getRandomFloat(-0.5, 0.5);
+                
+                // Initial styling for the 3D effect
+                this.renderedStyles = {
+                    innerTranslationY: { previous: 0, current: 0, ease: 0.1 },
+                    itemRotation: { previous: 0, current: 0, ease: 0.1, toValue: Number(MathUtils.getRandomFloat(-70, -50)) }
+                };
+            }
+    
+            render(scrollY) {
+                const rect = this.DOM.el.getBoundingClientRect();
+                const top = scrollY + rect.top;
+                
+                // Calculate parallax values
+                const toValue = 40; // --overflow value
+                const fromValue = -40;
+                const targetY = Math.max(Math.min(MathUtils.map(top - scrollY, window.innerHeight, -rect.height, fromValue, toValue), toValue), fromValue);
+                
+                // Interpolate (Lerp)
+                this.renderedStyles.innerTranslationY.previous = MathUtils.lerp(this.renderedStyles.innerTranslationY.previous, targetY, 0.1);
+                
+                // Apply Styles
+                this.DOM.image.style.transform = `translate3d(0,${this.renderedStyles.innerTranslationY.previous}px,0)`;
+                this.DOM.imageWrapper.style.transform = `rotate3d(1,${this.ry},${this.rz},${this.renderedStyles.itemRotation.previous}deg)`;
+            }
+        }
+    
+        class MiscScroll {
+            constructor() {
+                this.container = document.querySelector("#menu-4");
+                this.items = [...this.container.querySelectorAll(".misc-content__item")].map(i => new Item(i));
+                this.rafId = null;
+                this.render();
+            }
+    
+            render() {
+                const scrollY = window.pageYOffset;
+                this.items.forEach(item => item.render(scrollY));
+                this.rafId = requestAnimationFrame(() => this.render());
+            }
+    
+            destroy() {
+                cancelAnimationFrame(this.rafId);
+            }
+        }
+    
+        window.miscEngineInstance = new MiscScroll();
+    };
 });
 
 // =====================================================================
