@@ -751,8 +751,6 @@ h2.resp-accordion { cursor: pointer; display: none; height: 90px; line-height: 9
 ======================================================================*/
 
 /* --- MISC SECTION PARALLAX OVERRIDES --- */
-/* FORCE OVERRIDE: Scoped strictly to the Misc section */
-/* --- 3D PARALLAX MISC ENGINE --- */
 #menu-4 .misc-main {
     background-color: #120605;
     overflow-x: hidden;

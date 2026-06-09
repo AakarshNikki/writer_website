@@ -323,17 +323,26 @@ jQuery(document).ready(function($) {
 
     $(".main_menu a.nick_page4").click(function(e) { 
         e.preventDefault(); 
-        hideGlobalBackButton(); 
+    
+    // Hide Logo
+        gsap.to(".logocontainer", { opacity: 0, duration: 0.3, onComplete: () => $(".logocontainer").hide() });
         
-        transitionToSection('#menu-container .homepage', '#menu-4', () => {
-            // Wait for CSS animations/transitions to fully settle (500ms)
-            setTimeout(() => {
-                if (typeof initMiscEngine === 'function') {
-                    initMiscEngine();
-                    console.log("Misc Engine Engaged");
-                }
-            }, 500);
-        }); 
+        // Show Back Button
+        $(".nick-sticky-back-container").css("display", "block");
+        gsap.to(".nick-sticky-back-container", { opacity: 1, duration: 0.3 });
+
+        transitionToSection('#menu-container .homepage', '#menu-4', function() {
+            
+            transitionToSection('#menu-container .homepage', '#menu-4', () => {
+                // Wait for CSS animations/transitions to fully settle (500ms)
+                setTimeout(() => {
+                    if (typeof initMiscEngine === 'function') {
+                        initMiscEngine();
+                        console.log("Misc Engine Engaged");
+                    }
+                }, 500);
+            }); 
+        });
     });
 
     $(".main_menu a.nick_homeportfolio").click(function(e) { 
@@ -593,12 +602,12 @@ jQuery(document).ready(function($) {
     
             gsap.fromTo(img, 
                 { 
-                    rotateX: -30, 
+                    rotateX: -60, 
                     rotateY: -10 * multiplier, // Tilts Left for even, Right for odd
                     scale: 0.8 
                 }, 
                 { 
-                    rotateX: 30,  
+                    rotateX: 60,  
                     rotateY: 10 * multiplier,  // Tilts Right for even, Left for odd
                     scale: 1,
                     ease: "none",
@@ -625,8 +634,8 @@ jQuery(document).ready(function($) {
                 this.DOM.imageWrapper = this.DOM.image.parentNode;
                 this.DOM.el.style.perspective = "1000px";
                 this.DOM.imageWrapper.style.transformOrigin = "50% 100%";
-                this.ry = MathUtils.getRandomFloat(-0.5, 0.5);
-                this.rz = MathUtils.getRandomFloat(-0.5, 0.5);
+                this.ry = 0.3; 
+                this.rz = 0.1;
                 
                 // Initial styling for the 3D effect
                 this.renderedStyles = {
