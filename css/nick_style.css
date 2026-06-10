@@ -754,12 +754,24 @@ h2.resp-accordion { cursor: pointer; display: none; height: 90px; line-height: 9
    MISC LAYOUT
 ========================== */
 
+#menu-4 .misc-page__title {
+    display: flex;
+    min-height: 20vh;
+    text-align: center;
+    color: #9d5a4d;
+    font-size: 6rem;
+    font-family: 'Dancing Script', cursive;
+    text-shadow: 0 4px 15px rgba(0,0,0,0.9);
+    z-index: 5;
+    margin: 10v;
+}
+
 #menu-4 .misc-content__item {
     min-height: 60vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 35px;
+    gap: 15px;
     margin-bottom: 5vh;
     perspective: 1200px;
 }
@@ -786,27 +798,31 @@ h2.resp-accordion { cursor: pointer; display: none; height: 90px; line-height: 9
     box-shadow: 0 20px 40px rgba(0,0,0,.5);
 }
 
+.misc-content__item-info {
+    width: 100%;
+    display: flex;
+    flex-direction: column; /* THIS stacks them: Title -> Desc -> Button */
+    align-items: flex-start; /* Aligns everything to the left */
+    justify-content: center;
+    gap: 15px;
+    padding: 0 20px;
+    margin-right: 50px;
+    margin-left: 5px;
+}
+
 /* TITLE UNDER IMAGE */
 #menu-4 .misc-content__item-title {
-    position: static !important;
-    text-align: center;
-    margin-top: 12px;
-    margin-bottom: 0;
-
+    position: static; /* Remove absolute positioning */
+    text-align: left;
+    margin: 0px 5px 20px;
     font-family: 'Dancing Script', cursive;
-    font-size: 6rem;
-    line-height: .9;
+    font-size: 3.5rem; /* Adjust size as needed */
+    line-height: 1;
     color: #9d5a4d;
 }
 
 /* RIGHT COLUMN */
 
-.misc-content__item-info {
-    width: 260px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
 
 /* DESCRIPTION */
 .misc-content__item-description {
@@ -869,6 +885,10 @@ h2.resp-accordion { cursor: pointer; display: none; height: 90px; line-height: 9
     }
 
     #menu-4 .misc-content__item-title {
-        font-size: 4rem;
+        font-size: 2.8rem;
     }
+    #menu-4 .misc-page__title {
+        font-size: 3.5rem;
+    }
+
 }

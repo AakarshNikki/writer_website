@@ -595,27 +595,28 @@ jQuery(document).ready(function($) {
     
         // 3. Apply the 3D Scrub effect with alternation
         items.forEach((item, index) => {
-            const img = item.querySelector(".misc-content__item-img");
+            const imgWrap = item.querySelector(".misc-content__item-imgwrap");
             
             // This line is the key: if index is even, multiplier is 1. If odd, it's -1.
             const multiplier = (index % 2 === 0) ? 1 : -1;
     
-            gsap.fromTo(img, 
-                { 
-                    rotateX: -60, 
-                    rotateY: -10 * multiplier, // Tilts Left for even, Right for odd
-                    scale: 0.8 
-                }, 
-                { 
-                    rotateX: 60,  
-                    rotateY: 10 * multiplier,  // Tilts Right for even, Left for odd
+           gsap.fromTo(
+                imgWrap,
+                {
+                    rotateX: -90,
+                    rotateY: -15 * multiplier,
+                    scale: .6
+                },
+                {
+                    rotateX: 90,
+                    rotateY: 15 * multiplier,
                     scale: 1,
                     ease: "none",
                     scrollTrigger: {
-                        trigger: item,
-                        start: "top bottom", 
-                        end: "bottom top",   
-                        scrub: 1.5,
+                        trigger: imgWrap,
+                        start: "top bottom",
+                        end: "bottom top",
+                        scrub: .8,
                         invalidateOnRefresh: true
                     }
                 }
@@ -649,16 +650,26 @@ jQuery(document).ready(function($) {
                 const top = scrollY + rect.top;
                 
                 // Calculate parallax values
-                const toValue = 40; // --overflow value
-                const fromValue = -40;
+                const toValue = 60; // --overflow value
+                const fromValue = -60;
                 const targetY = Math.max(Math.min(MathUtils.map(top - scrollY, window.innerHeight, -rect.height, fromValue, toValue), toValue), fromValue);
                 
                 // Interpolate (Lerp)
                 this.renderedStyles.innerTranslationY.previous = MathUtils.lerp(this.renderedStyles.innerTranslationY.previous, targetY, 0.1);
                 
                 // Apply Styles
-                this.DOM.image.style.transform = `translate3d(0,${this.renderedStyles.innerTranslationY.previous}px,0)`;
-                this.DOM.imageWrapper.style.transform = `rotate3d(1,${this.ry},${this.rz},${this.renderedStyles.itemRotation.previous}deg)`;
+                this.DOM.imageWrapper.style.transform = `
+                translate3d(
+                    0,
+                    ${this.renderedStyles.innerTranslationY.previous}px,
+                    0
+                )
+                rotate3d(
+                    1,
+                    ${this.ry},
+                    ${this.rz},
+                    ${this.renderedStyles.itemRotation.previous}deg
+                )`;
             }
         }
     
