@@ -737,9 +737,12 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         })
         .to("#zoom-article-overlay .zoom-scroll-prompt", { opacity: 0, z: 200, duration: 0.2 }, 0)
-        .to("#zoom-article-overlay .zoom-item[data-layer='1']", { opacity: 1, z: 500, ease: "power1.inOut" }, 0)
-        .to("#zoom-article-overlay .zoom-item[data-layer='2']", { opacity: 1, z: 800, ease: "power1.inOut" }, 0)
-        .to("#zoom-article-overlay .zoom-item[data-layer='3']", { opacity: 1, z: 1200, ease: "power1.inOut" }, 0)
+        
+        // THE FIX: Massively increased Z-values (2000+) to guarantee they fly completely past the camera
+        .to("#zoom-article-overlay .zoom-item[data-layer='1']", { opacity: 0, z: 2000, ease: "power1.inOut" }, 0)
+        .to("#zoom-article-overlay .zoom-item[data-layer='2']", { opacity: 0, z: 2500, ease: "power1.inOut" }, 0)
+        .to("#zoom-article-overlay .zoom-item[data-layer='3']", { opacity: 0, z: 3000, ease: "power1.inOut" }, 0)
+        
         .to("#zoom-article-overlay .zoom-heading", { opacity: 1, z: 50, ease: "power1.inOut" }, 0);
 
         backBtnTrigger = ScrollTrigger.create({

@@ -22,14 +22,16 @@ h1, h2, h3, h4, h5, h6 { font-family: Tahoma, Arial; font-weight: 400; }
 
 /* --- BRAND HEADER ENGINE --- */
 h1 {   
-    font-size: 3em; 
+    font-size: clamp(2.5rem, 6vw, 3.5rem); /* Responsive: smaller on phones, maxes out on desktop */
+    font-family: 'Dancing Script', cursive; /* Applied the elegant Misc section font */
     color: #cccccc; 
     background: transparent !important; 
     padding: 0px !important; 
     float: none !important; 
     text-shadow: 4px 2px 2px rgba(33, 33, 33, 1); 
-    margin: 0 0 8px 0 !important; 
+    margin: 0 auto 8px auto !important; 
     display: block !important;
+    text-align: center !important; /* Forces center alignment */
 }
 
 .logocontainer {
@@ -37,8 +39,28 @@ h1 {
     max-width: 1140px; 
     margin: 0 auto !important;
     padding: 30px 15px 10px 15px !important;
-    text-align: left; 
+    text-align: center !important; /* Centers the container contents */
     box-sizing: border-box !important;
+}
+
+.nick_smalltitle { 
+    float: none !important; 
+    padding: 0px !important; 
+    font-size: 1em; 
+    color: #b5b5b5;
+    margin: 0 auto 20px auto !important; 
+    display: block !important;
+    text-align: center !important; /* Ensures the subtitle is also centered */
+}
+
+.footer-container {
+    width: 100% !important;
+    max-width: 1140px; 
+    margin: 0 auto !important;
+    padding: 30px 15px 10px 15px !important;
+    text-align: center !important; 
+    box-sizing: border-box !important;
+    clear: both !important;
 }
 
 h2 { font-size: 24px; color: #333333; margin-top: 0px; }
@@ -61,14 +83,25 @@ h3 { text-align: center; font-size: 2em; }
     box-sizing: border-box !important;
 }
 
-.nick_smalltitle { 
-    float: none !important; 
-    padding: 0px !important; 
-    font-size: 1em; 
-    color: #b5b5b5;
-    margin: 0 0 20px 0 !important; 
-    display: block !important;
+/* Targets the main menu tiles (Poems, Stories, Misc, About, Contact) */
+#menu-1 .nick_link a,
+#menu-1 .nick_linkcontact a{
+     font-family: 'Dancing Script', cursive !important;
+    font-weight: 700 !important;
+    letter-spacing: 2px;
+    font-size: 1.2em;
 }
+/* Targets the Short Story titles in the story slider */
+.story-select-btn {
+    font-family: 'Dancing Script', cursive !important;
+    font-weight: 700 !important;
+    letter-spacing: 2px;
+}
+
+/* Optional: Dancing Script tends to render a little smaller than standard fonts. 
+   If you feel the story titles are too small now, uncomment the line below to bump them up! */
+/* .story-select-btn { font-size: 1.2em; } */
+
 .nick_footer { text-align: center !important; font-size: 14px; color: #b5b5b5; margin: 30px auto 60px auto !important; clear: both; }
 
 /*======================================================================
@@ -517,7 +550,7 @@ h2.resp-accordion { cursor: pointer; display: none; height: 90px; line-height: 9
 }
 
 /*======================================================================
-    FIXED VIEWPORT STICKY BACK NAVIGATION CONTROL (POEMS EXCLUSIVE)
+    FIXED VIEWPORT STICKY BACK NAVIGATION CONTROL
 ======================================================================*/
 .nick-sticky-back-container {
     position: fixed !important; 
@@ -527,9 +560,9 @@ h2.resp-accordion { cursor: pointer; display: none; height: 90px; line-height: 9
     width: 64px !important;
     height: 64px !important;
     display: none;              
-    transform: scale(0.7);
-    opacity: 0;
-    transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1) !important;
+    transform: scale(0.7); /* GSAP will animate this to 1 */
+    opacity: 0;            /* GSAP will animate this to 1 */
+    /* REMOVED CSS TRANSITIONS HERE SO GSAP HAS FULL CONTROL */
 }
 
 .nick-sticky-back-container a {
@@ -546,11 +579,11 @@ h2.resp-accordion { cursor: pointer; display: none; height: 90px; line-height: 9
     display: block !important;
     object-fit: contain !important;
     filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.45)) !important; 
+    transition: transform 0.25s ease !important; /* Hover effect safely isolated to the image */
 }
 
-.nick-sticky-back-container:hover {
+.nick-sticky-back-container:hover img {
     transform: scale(1.1) !important;
-    opacity: 1 !important;
 }
 
 @media (max-width: 767px) {
@@ -559,12 +592,6 @@ h2.resp-accordion { cursor: pointer; display: none; height: 90px; line-height: 9
         right: 20px !important;
         width: 50px !important;
         height: 50px !important;
-    }
-    .poem-showcase-card {
-        margin-bottom: 55px !important;
-    }
-    .poem-showcase-card .poem-card-headline {
-        font-size: 1.5rem !important;
     }
 }
 
@@ -975,12 +1002,12 @@ h2.resp-accordion { cursor: pointer; display: none; height: 90px; line-height: 9
 #zoom-article-overlay .zoom-item[data-layer="1"] { opacity: 0.2; z-index: 1; }
 
 /* Circular Placement via Explicit Classes */
-#zoom-article-overlay .item-1 { left: 43vw; top: 12%; width: 14vw; }  /* Top Center */
-#zoom-article-overlay .item-2 { left: 70vw; top: 28%; width: 14vw; }  /* Top Right */
-#zoom-article-overlay .item-3 { left: 70vw; top: 60%; width: 14vw; }  /* Bottom Right */
-#zoom-article-overlay .item-4 { left: 43vw; top: 76%; width: 14vw; }  /* Bottom Center */
-#zoom-article-overlay .item-5 { left: 16vw; top: 60%; width: 14vw; }  /* Bottom Left */
-#zoom-article-overlay .item-6 { left: 16vw; top: 28%; width: 14vw; }  /* Top Left */
+#zoom-article-overlay .item-1 { left: 28vw; top: 8%;  width: 45vw; }  /* Top Center */
+#zoom-article-overlay .item-2 { left: 55vw; top: 30%; width: 35vw; }  /* Top Right */
+#zoom-article-overlay .item-3 { left: 50vw; top: 65%; width: 42vw; }  /* Bottom Right */
+#zoom-article-overlay .item-4 { left: 25vw; top: 80%; width: 38vw; }  /* Bottom Center */
+#zoom-article-overlay .item-5 { left: 5vw;  top: 58%; width: 40vw; }  /* Bottom Left */
+#zoom-article-overlay .item-6 { left: 8vw;  top: 25%; width: 32vw; }  /* Top Left */
 
 #zoom-article-overlay .zoom-item:not(.zoom-heading) { max-height: 400px; max-width: 400px; }
 
@@ -1012,6 +1039,7 @@ h2.resp-accordion { cursor: pointer; display: none; height: 90px; line-height: 9
 #zoom-article-overlay p { margin-bottom: 25px; }
 
 /* Custom Sticky Back Button */
+/* Custom Sticky Back Button for the Zoom Overlay */
 #zoom-article-back-btn {
     position: fixed !important; 
     bottom: 30px !important;    
@@ -1019,11 +1047,10 @@ h2.resp-accordion { cursor: pointer; display: none; height: 90px; line-height: 9
     z-index: 100000000 !important; 
     width: 64px !important;
     height: 64px !important;
-    display: block !important;
+    visibility: hidden; /* GSAP autoAlpha uses this */
     opacity: 0; 
-    visibility: hidden;
     transform: scale(0.7);
-    transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1) !important;
+    /* REMOVED CSS TRANSITIONS HERE SO GSAP HAS FULL CONTROL */
 }
 
 #zoom-article-back-btn img {
@@ -1032,5 +1059,19 @@ h2.resp-accordion { cursor: pointer; display: none; height: 90px; line-height: 9
     display: block !important;
     object-fit: contain !important;
     filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.45)) !important; 
+    transition: transform 0.25s ease !important; /* Hover effect safely isolated to the image */
 }
-#zoom-article-back-btn:hover { transform: scale(1.1) !important; }
+
+#zoom-article-back-btn:hover img {
+    transform: scale(1.1) !important;
+}
+
+/* Tablets and Desktop: Wider layout with dynamic varied sizing */
+@media (min-width: 768px) {
+    #zoom-article-overlay .item-1 { left: 41vw; top: 10%; width: 18vw; }
+    #zoom-article-overlay .item-2 { left: 68vw; top: 25%; width: 14vw; }
+    #zoom-article-overlay .item-3 { left: 65vw; top: 60%; width: 16vw; }
+    #zoom-article-overlay .item-4 { left: 42vw; top: 76%; width: 15vw; }
+    #zoom-article-overlay .item-5 { left: 18vw; top: 62%; width: 13vw; }
+    #zoom-article-overlay .item-6 { left: 15vw; top: 22%; width: 17vw; }
+}
