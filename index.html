@@ -158,7 +158,7 @@
                     <h2 class="misc-content__item-title">The water that AI drinks</h2>
                     <div class="misc-content__item-info">
                       <p class="misc-content__item-description">The Middle English 'tigre' and Old English tigras derive from the French tigre.</p>
-                      <a href="#" class="misc-read-more">Read More</a>
+                      <a href="#" class="misc-read-more" data-article-id="article-1">Read More</a>
                     </div>
                 </div>
 
@@ -169,7 +169,7 @@
                     <h2 class="misc-content__item-title">The water that AI drinks</h2>
                     <div class="misc-content__item-info">
                         <p class="misc-content__item-description">The Middle English 'tigre' and Old English tigras derive from the French tigre.</p>
-                        <a href="#" class="misc-read-more">Read More</a>
+                        <a href="#" class="misc-read-more" data-article-id="article-2">Read More</a>
                     </div>
                 </div>
 
@@ -180,7 +180,7 @@
                     <h2 class="misc-content__item-title">The water that AI drinks</h2>
                     <div class="misc-content__item-info">
                         <p class="misc-content__item-description">The Middle English 'tigre' and Old English tigras derive from the French tigre.</p>
-                        <a href="#" class="misc-read-more">Read More</a>
+                        <a href="#" class="misc-read-more" data-article-id="article-3">Read More</a>
                     </div>
                 </div>
 
@@ -191,7 +191,7 @@
                     <h2 class="misc-content__item-title">The water that AI drinks</h2>
                     <div class="misc-content__item-info">
                             <p class="misc-content__item-description">The Middle English 'tigre' and Old English tigras derive from the French tigre.</p>
-                            <a href="#" class="misc-read-more">Read More</a>
+                            <a href="#" class="misc-read-more" data-article-id="article-4">Read More</a>
                     </div>
                 </div>
 
@@ -202,7 +202,7 @@
                     <h2 class="misc-content__item-title">The water that AI drinks</h2>
                     <div class="misc-content__item-info">
                         <p class="misc-content__item-description">The Middle English 'tigre' and Old English tigras derive from the French tigre.</p>
-                        <a href="#" class="misc-read-more">Read More</a>
+                        <a href="#" class="misc-read-more" data-article-id="article-5">Read More</a>
                     </div>
                 </div>
             </div>
@@ -474,6 +474,33 @@
         </div>
       </div>
       <button type="button" id="close-poem-modal-reader">✕ Close Poem</button>
+    </div>
+
+   <div id="zoom-article-overlay" style="display: none; opacity: 0;">
+        
+        <div class="zoom-container">
+            <div class="zoom-scroll-prompt">↓ Scroll to read article ↓</div>
+            
+            <h1 class="zoom-heading" id="zoom-dynamic-title">Article Title</h1>
+            
+            <div class="zoom-item item-1" data-layer="2"><img src="https://images.pexels.com/photos/1642068/pexels-photo-1642068.jpeg" alt=""></div>
+            <div class="zoom-item item-2" data-layer="3"><img src="https://images.pexels.com/photos/208840/pexels-photo-208840.jpeg" alt="" /></div>
+            <div class="zoom-item item-3" data-layer="1"><img src="https://images.pexels.com/photos/146067/pexels-photo-146067.jpeg" alt="" /></div>
+            <div class="zoom-item item-4" data-layer="2"><img src="https://images.pexels.com/photos/247502/pexels-photo-247502.jpeg" alt="" /></div>
+            <div class="zoom-item item-5" data-layer="3"><img src="https://images.pexels.com/photos/2544554/pexels-photo-2544554.jpeg" alt="" /></div>
+            <div class="zoom-item item-6" data-layer="1"><img src="https://images.pexels.com/photos/1642068/pexels-photo-1642068.jpeg" alt="" /></div>
+        </div>
+
+        <section class="zoom-article-content">
+            <div class="article-text-body" id="zoom-dynamic-content">
+                <p class="intro-text">Loading...</p>
+            </div>
+        </section>
+
+        <a id="zoom-article-back-btn" href="#" title="Return to Menu">
+            <img src="images/Go-back.png" alt="Go Back Navigation Button" />
+        </a>
+
     </div>
 
     <div class="nick-sticky-back-container">

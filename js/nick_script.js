@@ -696,6 +696,120 @@ jQuery(document).ready(function($) {
     };
 });
 
+/* =====================================================================
+   INDEPENDENT MISC ARTICLE ZOOM OPENER MODULE (VANILLA JS)
+===================================================================== */
+document.addEventListener("DOMContentLoaded", function() {
+    let zoomTimeline = null;
+    let backBtnTrigger = null;
+    const overlay = document.getElementById('zoom-article-overlay');
+
+    if (!overlay) return; // Failsafe if HTML isn't present
+
+    // --- 1. THE ARTICLE DATABASE ---
+    const articleDatabase = {
+        "article-1": `
+            <p class="intro-text">The Middle English 'tigre' and Old English tigras derive from the French tigre, from Latin tigris.</p>
+            <p>This is the full text for the FIRST article. It loads dynamically when you click.</p>
+        `,
+        "article-2": `
+            <p class="intro-text">Welcome to the second article: Exploring the depths of procedural generation.</p>
+            <p>This is completely different text for the SECOND article.</p>
+        `,
+        "article-3": `
+            <p class="intro-text">The evolution of local LLMs and workstation setups.</p>
+            <p>Content for the THIRD article goes here.</p>
+        `
+    };
+
+    function initZoomModule() {
+        // Ensure GSAP knows the overlay is the scroller
+        ScrollTrigger.defaults({ scroller: overlay });
+
+        zoomTimeline = gsap.timeline({
+            scrollTrigger: {
+                trigger: "#zoom-article-overlay .zoom-container",
+                start: "top top",
+                end: "+=200%", 
+                pin: true,
+                scrub: 1,
+                invalidateOnRefresh: true
+            }
+        })
+        .to("#zoom-article-overlay .zoom-scroll-prompt", { opacity: 0, z: 200, duration: 0.2 }, 0)
+        .to("#zoom-article-overlay .zoom-item[data-layer='1']", { opacity: 1, z: 500, ease: "power1.inOut" }, 0)
+        .to("#zoom-article-overlay .zoom-item[data-layer='2']", { opacity: 1, z: 800, ease: "power1.inOut" }, 0)
+        .to("#zoom-article-overlay .zoom-item[data-layer='3']", { opacity: 1, z: 1200, ease: "power1.inOut" }, 0)
+        .to("#zoom-article-overlay .zoom-heading", { opacity: 1, z: 50, ease: "power1.inOut" }, 0);
+
+        backBtnTrigger = ScrollTrigger.create({
+            trigger: "#zoom-article-overlay .zoom-article-content",
+            start: "top 60%", 
+            onEnter: () => gsap.to("#zoom-article-back-btn", { autoAlpha: 1, scale: 1, duration: 0.3, ease: "power2.out" }),
+            onLeaveBack: () => gsap.to("#zoom-article-back-btn", { autoAlpha: 0, scale: 0.7, duration: 0.3, ease: "power2.in" })
+        });
+    }
+
+    // --- Open Event ---
+    const readMoreBtns = document.querySelectorAll('.misc-read-more');
+    
+    readMoreBtns.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Extract Title
+            const cardInfo = this.closest('.misc-content__item-info');
+            if (cardInfo) {
+                const titleEl = cardInfo.querySelector('.misc-content__item-title');
+                if (titleEl) document.getElementById('zoom-dynamic-title').innerHTML = titleEl.innerText.replace(" ", "<br/>");
+            }
+
+            // Extract Content
+            const targetArticleId = this.getAttribute('data-article-id');
+            const dynamicContent = articleDatabase[targetArticleId] || "<p class='intro-text'>Article content coming soon. Please ensure your button has a data-article-id attribute.</p>";
+            document.getElementById('zoom-dynamic-content').innerHTML = dynamicContent;
+
+            // Force Display & Scroll Reset
+            overlay.style.display = 'block';
+            overlay.scrollTop = 0; 
+            document.body.style.overflow = 'hidden'; 
+            
+            // Reset animations
+            gsap.set("#zoom-article-back-btn", { autoAlpha: 0, scale: 0.7 });
+            gsap.set("#zoom-article-overlay .zoom-scroll-prompt", { opacity: 1, z: 0 }); 
+            
+            setTimeout(() => {
+                overlay.style.opacity = '1';
+                
+                if (!zoomTimeline) {
+                    initZoomModule();
+                } else {
+                    ScrollTrigger.refresh(); 
+                }
+            }, 50);
+        });
+    });
+
+    // --- Close Event ---
+    const backBtn = document.getElementById('zoom-article-back-btn');
+    if (backBtn) {
+        backBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            gsap.to(this, { autoAlpha: 0, scale: 0.7, duration: 0.2 });
+
+            gsap.to(overlay, { 
+                opacity: 0, 
+                duration: 0.4, 
+                onComplete: () => {
+                    overlay.style.display = 'none';
+                    document.body.style.overflow = ''; 
+                    overlay.scrollTop = 0; 
+                } 
+            });
+        });
+    }
+});
 // =====================================================================
 // PART 5: GOOGLE MAPS LOADER ASSET
 // =====================================================================

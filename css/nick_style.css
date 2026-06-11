@@ -892,3 +892,145 @@ h2.resp-accordion { cursor: pointer; display: none; height: 90px; line-height: 9
     }
 
 }
+
+/* =====================================================================
+   INDEPENDENT MISC ARTICLE ZOOM OPENER MODULE
+===================================================================== */
+
+#zoom-article-overlay {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: #111111 !important; 
+    z-index: 99999999 !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important; 
+    transition: opacity 0.4s ease;
+}
+
+#zoom-article-overlay .zoom-container {
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    perspective: 100vh;
+    width: 100%;
+}
+
+/* --- Animated Central Prompt --- */
+#zoom-article-overlay .zoom-scroll-prompt {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ff7b00;
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    z-index: 100;
+    opacity: 1;
+    pointer-events: none;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.8);
+    animation: zoomPromptBounce 2s infinite ease-in-out;
+}
+
+@keyframes zoomPromptBounce {
+    0%, 100% { margin-top: 0; }
+    50% { margin-top: 15px; }
+}
+
+#zoom-article-overlay .zoom-heading {
+    font-size: clamp(3rem, 6vw, 6rem);
+    text-align: center;
+    font-family: 'Dancing Script', cursive; 
+    color: #9d5a4d;
+    opacity: 0;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate3d(-50%, -50%, -2000px);
+    white-space: nowrap;
+    margin: 0;
+    z-index: 50;
+    text-shadow: 0 4px 15px rgba(0,0,0,0.9);
+}
+
+#zoom-article-overlay .zoom-item {
+    position: absolute;
+    transform-origin: center center;
+    will-change: transform, opacity;
+}
+
+#zoom-article-overlay .zoom-item img {
+    width: 100%;
+    border-radius: 4px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.9);
+}
+
+/* Opacity Depths */
+#zoom-article-overlay .zoom-item[data-layer="3"] { opacity: 0.6; z-index: 3; }
+#zoom-article-overlay .zoom-item[data-layer="2"] { opacity: 0.4; z-index: 2; }
+#zoom-article-overlay .zoom-item[data-layer="1"] { opacity: 0.2; z-index: 1; }
+
+/* Circular Placement via Explicit Classes */
+#zoom-article-overlay .item-1 { left: 43vw; top: 12%; width: 14vw; }  /* Top Center */
+#zoom-article-overlay .item-2 { left: 70vw; top: 28%; width: 14vw; }  /* Top Right */
+#zoom-article-overlay .item-3 { left: 70vw; top: 60%; width: 14vw; }  /* Bottom Right */
+#zoom-article-overlay .item-4 { left: 43vw; top: 76%; width: 14vw; }  /* Bottom Center */
+#zoom-article-overlay .item-5 { left: 16vw; top: 60%; width: 14vw; }  /* Bottom Left */
+#zoom-article-overlay .item-6 { left: 16vw; top: 28%; width: 14vw; }  /* Top Left */
+
+#zoom-article-overlay .zoom-item:not(.zoom-heading) { max-height: 400px; max-width: 400px; }
+
+/* --- Article Content Section --- */
+#zoom-article-overlay .zoom-article-content {
+    min-height: 100vh;
+    background: #111111;
+    display: flex;
+    justify-content: center;
+    padding: 100px 20px;
+}
+
+#zoom-article-overlay .article-text-body {
+    max-width: 800px;
+    width: 100%;
+    color: #e0e0e0;
+    font-family: Tahoma, Arial, sans-serif;
+    font-size: 1.15rem;
+    line-height: 1.8;
+}
+
+#zoom-article-overlay .intro-text {
+    font-size: 1.75rem;
+    line-height: 1.5;
+    color: #ff7b00;
+    margin-bottom: 40px;
+}
+
+#zoom-article-overlay p { margin-bottom: 25px; }
+
+/* Custom Sticky Back Button */
+#zoom-article-back-btn {
+    position: fixed !important; 
+    bottom: 30px !important;    
+    right: 30px !important;     
+    z-index: 100000000 !important; 
+    width: 64px !important;
+    height: 64px !important;
+    display: block !important;
+    opacity: 0; 
+    visibility: hidden;
+    transform: scale(0.7);
+    transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1) !important;
+}
+
+#zoom-article-back-btn img {
+    width: 100% !important;
+    height: 100% !important;
+    display: block !important;
+    object-fit: contain !important;
+    filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.45)) !important; 
+}
+#zoom-article-back-btn:hover { transform: scale(1.1) !important; }
