@@ -209,7 +209,7 @@ jQuery(document).ready(function($) {
         if (poemScrollController) { poemScrollController.destroy(true); }
 
         const liquifyTrigger = document.querySelector('.js-liquify-trigger');
-        const textTriggers = [...document.querySelectorAll('.o-container p')];
+        const textTriggers = [...document.querySelectorAll('.o-container p, .poem-card-headline, .read-poem-prompt')];
         const inkTriggers = [...document.querySelectorAll('.js-ink-trigger')];
 
         poemScrollController = new ScrollMagic.Controller();
@@ -286,6 +286,120 @@ jQuery(document).ready(function($) {
         });
     }
 
+    // =====================================================================
+    // THE DISINTEGRATION TRANSITION ENGINE
+    // =====================================================================
+    // =====================================================================
+    // THE DISINTEGRATION TRANSITION ENGINE (CORS & FALLBACK SAFE)
+    // =====================================================================
+    function disintegrateAndTransition(outgoingSelector, incomingSelector, onCompleteCallback) {
+        const targetEl = document.querySelector(outgoingSelector);
+        if (!targetEl) return transitionToSection(outgoingSelector, incomingSelector, onCompleteCallback);
+
+        $('body').css('pointer-events', 'none');
+        gsap.set(targetEl, { opacity: 1 }); 
+
+        html2canvas(targetEl, { 
+            backgroundColor: null, 
+            scale: 1, 
+            logging: false,
+            useCORS: true,       
+            allowTaint: false    
+        }).then((canvas) => {
+            const width = canvas.width;
+            const height = canvas.height;
+            const ctx = canvas.getContext("2d", { willReadFrequently: true });
+            
+            let imageData;
+            try {
+                imageData = ctx.getImageData(0, 0, width, height);
+            } catch (error) {
+                console.warn("Disintegration bypassed: Browser security (CORS/Local File) blocked canvas read.");
+                $('body').css('pointer-events', '');
+                return transitionToSection(outgoingSelector, incomingSelector, onCompleteCallback);
+            }
+
+            let dataList = [];
+            gsap.set(targetEl, { opacity: 0 });
+
+            const COUNT = 35; 
+            const REPEAT_COUNT = 2; 
+
+            for (let i = 0; i < COUNT; i++) {
+                dataList.push(ctx.createImageData(width, height));
+            }
+
+            for (let x = 0; x < width; x++) {
+                for (let y = 0; y < height; y++) {
+                    for (let l = 0; l < REPEAT_COUNT; l++) {
+                        const index = (x + y * width) * 4;
+                        if (imageData.data[index + 3] === 0) continue; 
+                        
+                        const dataIndex = Math.floor((COUNT * (Math.random() + (2 * x) / width)) / 3);
+                        if (dataList[dataIndex]) {
+                            for (let p = 0; p < 4; p++) {
+                                dataList[dataIndex].data[index + p] = imageData.data[index + p];
+                            }
+                        }
+                    }
+                }
+            }
+
+            const canvasContainer = document.createElement('div');
+            canvasContainer.className = 'disintegration-container';
+            canvasContainer.style.left = targetEl.offsetLeft + 'px';
+            canvasContainer.style.top = targetEl.offsetTop + 'px';
+            canvasContainer.style.width = targetEl.offsetWidth + 'px';
+            canvasContainer.style.height = targetEl.offsetHeight + 'px';
+            targetEl.parentNode.insertBefore(canvasContainer, targetEl);
+
+            let tl = gsap.timeline({
+                onComplete: () => {
+                    canvasContainer.remove(); 
+                    $(outgoingSelector).hide();
+                    
+                    gsap.set(incomingSelector, { display: "block", opacity: 0, y: 15 });
+                    gsap.to(incomingSelector, {
+                        opacity: 1, y: 0, duration: 0.4, ease: "power2.out",
+                        onComplete: () => {
+                            $('body').css('pointer-events', ''); 
+                            if (typeof onCompleteCallback === "function") onCompleteCallback();
+                            if (typeof ScrollTrigger !== 'undefined') { ScrollTrigger.refresh(); }
+                        }
+                    });
+                }
+            });
+
+            dataList.forEach((data, i) => {
+                let clonedCanvas = document.createElement('canvas');
+                clonedCanvas.width = width;
+                clonedCanvas.height = height;
+                clonedCanvas.getContext("2d").putImageData(data, 0, 0);
+                clonedCanvas.className = "capture-canvas";
+                canvasContainer.appendChild(clonedCanvas);
+
+                const randomAngle = (Math.random() - 0.5) * 2 * Math.PI;
+                const randomRotationAngle = 30 * (Math.random() - 0.5);
+
+                tl.to(clonedCanvas, {
+                    duration: 1.2,
+                    rotate: randomRotationAngle,
+                    x: 60 * Math.sin(randomAngle),
+                    y: 60 * Math.cos(randomAngle),
+                    opacity: 0,
+                    ease: "power2.out"
+                }, (i / dataList.length) * 0.8); 
+            });
+            
+        }).catch(err => {
+            $('body').css('pointer-events', '');
+            transitionToSection(outgoingSelector, incomingSelector, onCompleteCallback);
+        });
+    }
+
+    // =====================================================================
+    // GLOBAL BACK BUTTON HELPERS
+    // =====================================================================
     function showGlobalBackButton() {
         gsap.killTweensOf(".nick-sticky-back-container");
         $(".nick-sticky-back-container").show();
@@ -300,13 +414,15 @@ jQuery(document).ready(function($) {
         });
     }
 
+    // =====================================================================
+    // MENU CLICK BINDINGS (OUTWARD DISINTEGRATION)
+    // =====================================================================
     $(".main_menu a.nick_page2").click(function(e) { 
         e.preventDefault(); 
         showGlobalBackButton(); 
-        
         gsap.to(".logocontainer", { opacity: 0, duration: 0.3, onComplete: () => $(".logocontainer").hide() });
 
-        transitionToSection('#menu-container .homepage', '#menu-2', function() {
+        disintegrateAndTransition('#menu-container .homepage', '#menu-2', function() {
             $("body").addClass("allow-scroll");
             initPoemRevealEngine();
         }); 
@@ -314,8 +430,9 @@ jQuery(document).ready(function($) {
     
     $(".main_menu a.nick_page3").click(function(e) {
         e.preventDefault();
-        hideGlobalBackButton(); // FIX: Explicitly strip button from Stories grid
-        transitionToSection('#menu-container .homepage', '#menu-container .portfolio', () => {
+        hideGlobalBackButton(); 
+
+        disintegrateAndTransition('#menu-container .homepage', '#menu-container .portfolio', () => {
             gsap.set(".nick-stories-slider-track", { xPercent: 0 });
             $(".nick-dot").removeClass("active").first().addClass("active");
         });
@@ -323,39 +440,56 @@ jQuery(document).ready(function($) {
 
     $(".main_menu a.nick_page4").click(function(e) { 
         e.preventDefault(); 
-    
-    // Hide Logo
         gsap.to(".logocontainer", { opacity: 0, duration: 0.3, onComplete: () => $(".logocontainer").hide() });
-        
-        // Show Back Button
-        $(".nick-sticky-back-container").css("display", "block");
-        gsap.to(".nick-sticky-back-container", { opacity: 1, duration: 0.3 });
+        showGlobalBackButton();
 
-        transitionToSection('#menu-container .homepage', '#menu-4', function() {
-            
-            transitionToSection('#menu-container .homepage', '#menu-4', () => {
-                // Wait for CSS animations/transitions to fully settle (500ms)
-                setTimeout(() => {
-                    if (typeof initMiscEngine === 'function') {
-                        initMiscEngine();
-                        console.log("Misc Engine Engaged");
-                    }
-                }, 500);
-            }); 
+        disintegrateAndTransition('#menu-container .homepage', '#menu-4', function() {
+            setTimeout(() => {
+                if (typeof initMiscEngine === 'function') {
+                    initMiscEngine();
+                }
+            }, 500);
         });
     });
 
+    $(".main_menu a.nick_page5").click(function(e) { 
+        e.preventDefault(); 
+        showGlobalBackButton(); 
+        disintegrateAndTransition('#menu-container .homepage', '#menu-container .about'); 
+    });
+    
+    $(".main_menu a.nick_page6").click(function(e) { 
+        e.preventDefault(); 
+        showGlobalBackButton(); 
+        disintegrateAndTransition('#menu-container .homepage', '#menu-container .contact', () => { loadMapScript(); }); 
+    });
+
+    // =====================================================================
+    // "GO BACK" CLICK BINDINGS (INWARD STANDARD TRANSITION)
+    // =====================================================================
     $(".main_menu a.nick_homeportfolio").click(function(e) { 
         e.preventDefault(); 
         hideGlobalBackButton();
         transitionToSection('#menu-container .portfolio', '#menu-container .homepage'); 
     });
 
-    $(".main_menu a.nick_hometestimonial").click(function(e) { e.preventDefault(); hideGlobalBackButton(); transitionToSection('#menu-container .testimonial', '#menu-container .homepage'); });
-    $(".main_menu a.nick_page5").click(function(e) { e.preventDefault(); showGlobalBackButton(); transitionToSection('#menu-container .homepage', '#menu-container .about'); });
-    $(".main_menu a.nick_homeabout").click(function(e) { e.preventDefault(); hideGlobalBackButton(); transitionToSection('#menu-container .about', '#menu-container .homepage'); });
-    $(".main_menu a.nick_page6").click(function(e) { e.preventDefault(); showGlobalBackButton(); transitionToSection('#menu-container .homepage', '#menu-container .contact', () => { loadMapScript(); }); });
-    $(".main_menu a.nick_homecontact").click(function(e) { e.preventDefault(); hideGlobalBackButton(); transitionToSection('#menu-container .contact', '#menu-container .homepage'); });
+    $(".main_menu a.nick_hometestimonial").click(function(e) { 
+        e.preventDefault(); 
+        hideGlobalBackButton(); 
+        transitionToSection('#menu-container .testimonial', '#menu-container .homepage'); 
+    });
+
+    $(".main_menu a.nick_homeabout").click(function(e) { 
+        e.preventDefault(); 
+        hideGlobalBackButton(); 
+        transitionToSection('#menu-container .about', '#menu-container .homepage'); 
+    });
+
+    $(".main_menu a.nick_homecontact").click(function(e) { 
+        e.preventDefault(); 
+        hideGlobalBackButton(); 
+        transitionToSection('#menu-container .contact', '#menu-container .homepage'); 
+    });
 
     // CUSTOM BACK BUTTON FOR MISC SECTION
     $(".misc-back-btn").click(function(e) {
@@ -389,10 +523,87 @@ jQuery(document).ready(function($) {
         }
     });
 
-    $(".nick-dot").on("click", function() {
-        var slideIndex = $(this).data("slide");
-        gsap.to(".nick-stories-slider-track", { xPercent: -(slideIndex * 50), duration: 0.6, ease: "power2.out" });
-        $(".nick-dot").removeClass("active"); $(this).addClass("active");
+    // =====================================================================
+    // ENHANCED STORIES SLIDER ENGINE (DOTS, WHEEL, AND SWIPE)
+    // =====================================================================
+    let isStoryMenuAnimating = false;
+    let storyMenuTouchStartX = 0;
+    let storyMenuTouchStartY = 0;
+
+    // Core navigation function
+    function navigateStoryMenuSlider(targetIndex) {
+        if (isStoryMenuAnimating) return;
+        
+        const $dots = $(".nick-dot");
+        const currentIndex = $dots.index($(".nick-dot.active"));
+        
+        // Prevent out-of-bounds scrolling
+        if (targetIndex < 0 || targetIndex >= $dots.length || targetIndex === currentIndex) return;
+
+        isStoryMenuAnimating = true;
+        
+        // Automatically calculates distance based on number of slides
+        const percentage = -(targetIndex * (100 / $dots.length)); 
+
+        gsap.to(".nick-stories-slider-track", { 
+            xPercent: percentage, 
+            duration: 0.6, 
+            ease: "power2.out",
+            onComplete: () => { isStoryMenuAnimating = false; }
+        });
+        
+        $dots.removeClass("active");
+        $dots.eq(targetIndex).addClass("active");
+    }
+
+    // 1. Dot Click Event (Upgraded)
+    $(".nick-dot").off("click").on("click", function() {
+        const slideIndex = $(this).data("slide");
+        navigateStoryMenuSlider(slideIndex);
+    });
+
+    // 2. Mouse Wheel & Trackpad Event
+    $(".nick-stories-slider-viewport").on("wheel", function(e) {
+        // Only prevent default scrolling if moving horizontally, 
+        // allowing normal vertical page scroll if needed
+        if (Math.abs(e.originalEvent.deltaX) > Math.abs(e.originalEvent.deltaY)) {
+            e.preventDefault();
+        }
+        
+        if (isStoryMenuAnimating) return;
+
+        // Threshold ensures a tiny accidental touch doesn't trigger a slide
+        if (Math.abs(e.originalEvent.deltaY) > 20 || Math.abs(e.originalEvent.deltaX) > 20) {
+            const currentIndex = $(".nick-dot").index($(".nick-dot.active"));
+            
+            if (e.originalEvent.deltaY > 0 || e.originalEvent.deltaX > 0) {
+                navigateStoryMenuSlider(currentIndex + 1); // Scroll Down/Right
+            } else {
+                navigateStoryMenuSlider(currentIndex - 1); // Scroll Up/Left
+            }
+        }
+    });
+
+    // 3. Touchscreen Swipe Event (Smartphones & Tablets)
+    $(".nick-stories-slider-viewport").on("touchstart", function(e) {
+        storyMenuTouchStartX = e.originalEvent.touches[0].clientX;
+        storyMenuTouchStartY = e.originalEvent.touches[0].clientY;
+    });
+
+    $(".nick-stories-slider-viewport").on("touchend", function(e) {
+        const diffX = storyMenuTouchStartX - e.originalEvent.changedTouches[0].clientX;
+        const diffY = storyMenuTouchStartY - e.originalEvent.changedTouches[0].clientY;
+        
+        // Verify it was a deliberate horizontal swipe, not a vertical scroll
+        if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 40) {
+            const currentIndex = $(".nick-dot").index($(".nick-dot.active"));
+            
+            if (diffX > 0) {
+                navigateStoryMenuSlider(currentIndex + 1); // Swipe Left -> Next Slide
+            } else {
+                navigateStoryMenuSlider(currentIndex - 1); // Swipe Right -> Prev Slide
+            }
+        }
     });
 
     $("a.menu-toggle-btn").click(function(e) {
