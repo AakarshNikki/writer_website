@@ -1245,6 +1245,7 @@ h2.resp-accordion { cursor: pointer; display: none; height: 90px; line-height: 9
 #menu-5 .about-text-block {
     margin: 0 !important;
     flex: 1 1 auto !important; /* Stretches to fill the rest of the column perfectly */
+    color: white;
 }
 
 /* Fallback override: Kills any hidden Bootstrap margins if old classes remain in the HTML */
@@ -1278,6 +1279,7 @@ h2.resp-accordion { cursor: pointer; display: none; height: 90px; line-height: 9
     flex-direction: column;
     justify-content: center;
     overflow: hidden !important; /* STRICTLY disables scrolling */
+    
 }
 
 /* =====================================================================
@@ -1339,7 +1341,23 @@ h2.resp-accordion { cursor: pointer; display: none; height: 90px; line-height: 9
     color: #000000 !important; 
     text-shadow: none !important; /* Removes any leftover white glow */
 }
+/* --- DYNAMIC FONT SCALING (Guarantees text fits without scroll) --- */
+#menu-5 .about-heading {
+    font-family: 'Dancing Script', cursive;
+    color: #ffffff !important; /* THE FIX: Changed from gold to stark white */
+    font-size: min(4.5vh, 2.5rem); 
+    margin: 0 0 1.5vh 0;
+    text-align: left;
+    white-space: nowrap;
+}
 
+#menu-5 .about-bio {
+    font-size: min(2.2vh, 3vw, 1.05rem); 
+    line-height: 1.45; 
+    color: #ffffff !important; /* THE FIX: Changed from light grey to stark white */
+    text-align: justify; 
+    margin: 0;
+}
 /* =====================================================================
    CONTACT SECTION: STRICT VIEWPORT MASONRY GRID
 ===================================================================== */
@@ -1393,18 +1411,55 @@ h2.resp-accordion { cursor: pointer; display: none; height: 90px; line-height: 9
     height: 100%; width: 100%; object-fit: cover;
 }
 
-#menu-6 .contact-social-tile {
-    flex: 0 0 25%; /* Short tile at the bottom */
-    background: #D1B200;
-    border-radius: 4px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+/* --- CUSTOM IMAGE SOCIAL ICONS FIX (RESPONSIVE 2x2 & SCALED) --- */
+
+/* 1. Shared Base Rules */
+#menu-6 .social-icons a {
+    display: inline-block;
+    flex-shrink: 0 !important;
+    transition: transform 0.2s ease;
+    margin: 0;
 }
-#menu-6 .contact-social-tile h3 { color: #111; font-family: 'Dancing Script', cursive; margin: 0 0 10px 0; font-size: 2rem; }
-#menu-6 .social-icons a { color: #111; font-size: 1.5rem; margin: 0 10px; transition: transform 0.2s; }
-#menu-6 .social-icons a:hover { transform: scale(1.2); }
+
+#menu-6 .social-icons a img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    display: block;
+    filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.3));
+}
+
+#menu-6 .social-icons a:hover { 
+    transform: scale(1.15); 
+}
+
+/* 2. Tablet & Desktop Monitors: Larger Icons in a Row */
+@media (min-width: 768px) {
+    #menu-6 .social-icons {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 25px !important; /* Nice, wide spacing */
+    }
+    #menu-6 .social-icons a {
+        width: 75px !important;  /* Bumping up the size for larger screens */
+        height: 75px !important;
+    }
+}
+
+/* 3. Smartphones: 2x2 Grid */
+@media (max-width: 767px) {
+    #menu-6 .social-icons {
+        display: grid !important;
+        grid-template-columns: repeat(2, max-content) !important; /* Forces exactly 2 columns */
+        justify-content: center !important;
+        gap: 15px 25px !important; /* 15px vertical gap, 25px horizontal gap */
+    }
+    #menu-6 .social-icons a {
+        width: 55px !important; /* Beautifully sized for tapping on phones */
+        height: 55px !important;
+    }
+}
 
 /* --- RIGHT COLUMN RATIOS --- */
 #menu-6 .contact-info-tile {
@@ -1520,5 +1575,102 @@ align-self: flex-end !important; /* Locks to the right */
     /* Optional: Slightly reduce the paper's side padding on tiny screens to give the text more room */
     #menu-6 .contact-form-tile.old-paper-form {
         padding: 30px 20px !important; 
+    }
+}
+
+/* --- THE WHATSAPP PILL TILE --- */
+#menu-6 .contact-info-tile.whatsapp-pill {
+    flex: 0 0 auto !important; /* Lets the pill determine its own natural height */
+    background: #1e1e1e; /* Matches the dark theme */
+    border-radius: 100px !important; /* THE FIX: Forces the severe rounded pill shape */
+    padding: 15px 30px 15px 15px !important; /* Extra padding on the right to balance the circle */
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    overflow: hidden;
+}
+
+#menu-6 .contact-info-tile.whatsapp-pill:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(37, 211, 102, 0.15); /* Subtle WhatsApp green glow on hover */
+}
+
+/* Wraps the entire pill in a clickable flex layout */
+#menu-6 .wa-link-wrapper {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    width: 100%;
+    text-decoration: none !important;
+}
+
+/* Draws the circle around the logo from the sketch */
+#menu-6 .wa-logo-circle {
+    width: clamp(65px, 8vw, 85px); 
+    height: clamp(65px, 8vw, 85px);
+    border: 2px solid #555; 
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: #111;
+    transition: all 0.3s ease;
+}
+
+/* Standard FontAwesome WhatsApp Logo */
+#menu-6 .wa-logo-circle i {
+    font-size: clamp(35px, 4vw, 45px);
+    color: #25D366; /* WhatsApp brand green */
+    transition: all 0.3s ease;
+}
+
+/* Hover effect inversion for the circle */
+#menu-6 .contact-info-tile.whatsapp-pill:hover .wa-logo-circle {
+    border-color: #25D366;
+    background: #25D366;
+}
+#menu-6 .contact-info-tile.whatsapp-pill:hover .wa-logo-circle i {
+    color: #111; /* Logo turns dark when background turns green */
+}
+
+/* Layout for the vertically stacked text */
+#menu-6 .wa-text-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: clamp(15px, 2vw, 25px);
+}
+
+#menu-6 .wa-text-block h3 {
+    font-family: 'Dancing Script', cursive;
+    color: #D1B200; 
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    margin: 0 0 2px 0;
+    line-height: 1;
+}
+
+#menu-6 .wa-text-block p {
+    margin: 0;
+    color: #ccc;
+    font-size: clamp(0.85rem, 1.5vw, 1rem);
+    line-height: 1.4;
+}
+
+/* The Call to Action line */
+#menu-6 .wa-text-block p.wa-cta {
+    color: #25D366;
+    font-weight: normal;
+    font-style: italic;
+    margin-top: 6px;
+    font-size: clamp(0.8rem, 1.2vw, 0.95rem);
+}
+
+/* Mobile Adjustment to keep the pill from breaking */
+@media (max-width: 767px) {
+    #menu-6 .contact-info-tile.whatsapp-pill {
+        border-radius: 50px !important; /* Slightly softer pill for narrow phone screens */
+        padding: 15px !important;
     }
 }
