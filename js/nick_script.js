@@ -453,10 +453,10 @@ jQuery(document).ready(function($) {
     });
 
     $(".main_menu a.nick_page5").click(function(e) { 
-        e.preventDefault(); 
-        showGlobalBackButton(); 
-        disintegrateAndTransition('#menu-container .homepage', '#menu-container .about'); 
-    });
+            e.preventDefault(); 
+            hideGlobalBackButton(); /* THE FIX: Hides the redundant sticky button */
+            disintegrateAndTransition('#menu-container .homepage', '#menu-container .about'); 
+        });
     
     $(".main_menu a.nick_page6").click(function(e) { 
         e.preventDefault(); 

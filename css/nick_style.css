@@ -170,6 +170,8 @@ h3 { text-align: center; font-size: 2em; }
     padding: 10px 10px !important; 
 }
 
+
+
 /* --- LIGHTBOX WIDGET ELEMENTS --- */
 #lightbox {
   cursor: pointer; position: fixed; width: 100%; height: 100%; top: 0; left: 0;
@@ -235,8 +237,21 @@ h2.resp-accordion { cursor: pointer; display: none; height: 90px; line-height: 9
 
 /* --- TABLET SCREEN TARGETS --- */
 @media(min-width: 600px) and (max-width: 991px) {
-    .homepage .container { display: flex !important; flex-wrap: wrap !important; justify-content: center !important; max-width: 720px; margin: 0 auto; }
-    .homepage .container .col-sm-6 { width: 50% !important; float: none !important; display: inline-block !important; padding: 0 6px !important; }
+    .homepage .container { 
+        display: flex !important; 
+        flex-wrap: wrap !important; 
+        justify-content: center !important; 
+        align-items: stretch !important; /* Forces equal column heights */
+        max-width: 720px; 
+        margin: 0 auto; 
+    }
+    .homepage .container .col-sm-6 { 
+        width: 50% !important; 
+        float: none !important; 
+        display: flex !important; 
+        flex-direction: column !important; /* Stacks tiles vertically */
+        padding: 0 6px !important; 
+    }
     
     .nick_mainservice, 
     .nick_mainportfolio, 
@@ -273,8 +288,20 @@ h2.resp-accordion { cursor: pointer; display: none; height: 90px; line-height: 9
         overflow: visible !important;
     }
     
-    .homepage .container { display: block !important; width: 940px !important; margin: 20px auto 0 auto !important; }
-    .homepage .container .col-sm-6 { float: left !important; width: 25% !important; padding: 0 6px !important; }
+    .homepage .container { 
+        display: flex !important; 
+        flex-wrap: nowrap !important; /* Keeps all 4 columns on one row */
+        align-items: stretch !important; /* Forces equal column heights */
+        width: 940px !important; 
+        margin: 20px auto 0 auto !important; 
+    }
+    .homepage .container .col-sm-6 { 
+        float: none !important; 
+        width: 25% !important; 
+        padding: 0 6px !important; 
+        display: flex !important; 
+        flex-direction: column !important; /* Stacks tiles vertically */
+    }
     
     .nick_mainservice, 
     .nick_mainportfolio, 
@@ -1122,4 +1149,376 @@ h2.resp-accordion { cursor: pointer; display: none; height: 90px; line-height: 9
     height: 100%;
     pointer-events: none;
     will-change: transform, opacity; /* Hardware acceleration for smooth dust */
+}
+
+/* =====================================================================
+   GRID ALIGNMENT FIX: FORCES BOTTOM TILES TO STRETCH FLUSH
+===================================================================== */
+@media(min-width: 600px) {
+    /* Makes the last tile in every column stretch down to the bottom */
+    .homepage .container .col-sm-6 > div:last-child {
+        flex-grow: 1 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+    }
+    
+    /* Ensures the container fills the new stretched space */
+    .homepage .container .col-sm-6 > div:last-child .nick_link {
+        flex-grow: 1 !important;
+        height: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    /* THE FIX: Forces the actual clickable text inside the 'a' tag to stay dead-center */
+    .homepage .container .col-sm-6 > div:last-child .nick_link a {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        height: 100% !important;
+        width: 100% !important;
+    }
+}
+
+/* =====================================================================
+   ABOUT SECTION: STRICT VIEWPORT MASONRY GRID (NO SCROLL)
+===================================================================== */
+#menu-5 {
+    height: 100vh;
+    height: 100dvh; /* For mobile browsers with address bars */
+    overflow: hidden !important; 
+    padding-top: 85px; /* Leaves space for the top logo */
+    padding-bottom: 20px; 
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#menu-5 .about-fullscreen-container {
+    height: 100%;
+    max-height: 85vh; /* Strict cap to prevent spilling out of the viewport */
+    width: 100%;
+    max-width: 1140px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Force Symmetrical 2-Column Grid on ALL devices (including phones) */
+#menu-5 .about-masonry-row {
+    height: 100%;
+    display: flex;
+    flex-direction: row !important; /* Forces side-by-side on mobile */
+    align-items: stretch;
+    margin: 0;
+    gap: 15px; 
+}
+
+/* Shared Column Structure */
+#menu-5 .about-col-left,
+#menu-5 .about-col-right {
+    width: calc(50% - 7.5px) !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+/* =====================================================================
+   THE SLEDGEHAMMER GAP FIX (LEFT COLUMN)
+===================================================================== */
+#menu-5 .about-col-left {
+    gap: 0 !important; /* Disable flex gap to take manual control */
+    justify-content: flex-start !important; /* Stops the browser from adding automatic space */
+}
+
+#menu-5 .about-img-small {
+    flex: 0 0 35% !important; 
+    margin: 0 0 5px 0 !important; /* Forces exactly 5px space, nothing else */
+    padding: 0 !important;
+    display: flex !important; /* Kills any invisible inline text nodes under the image */
+}
+
+#menu-5 .about-text-block {
+    margin: 0 !important;
+    flex: 1 1 auto !important; /* Stretches to fill the rest of the column perfectly */
+}
+
+/* Fallback override: Kills any hidden Bootstrap margins if old classes remain in the HTML */
+#menu-5 .about-col-left .nick_botgap,
+#menu-5 .about-col-left .nick_mainimg {
+    margin-bottom: 0 !important;
+}
+
+/* =====================================================================
+   RIGHT COLUMN (PRESERVES BUTTON SPACING)
+===================================================================== */
+#menu-5 .about-col-right {
+    gap: 15px !important; 
+}
+
+/* --- THE RATIOS & PROPORTIONS --- */
+
+/* Left Column: Small Image (35%) + Text (65%) */
+#menu-5 .about-img-small { 
+    flex: 0 0 35%; 
+    min-height: 0; /* Critical: allows flex items to shrink without overflowing */
+}
+#menu-5 .about-text-block {
+    flex: 1; 
+    min-height: 0; /* Critical */
+    background: #1e1e1e;
+    border-radius: 4px;
+    padding: min(3vh, 25px) min(3vw, 25px); 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden !important; /* STRICTLY disables scrolling */
+}
+
+/* =====================================================================
+   RIGHT COLUMN ALIGNMENT FIX (STRETCH TO FLUSH)
+===================================================================== */
+#menu-5 .about-col-right {
+    gap: 15px !important; 
+}
+
+#menu-5 .about-img-large { 
+    flex: 1 1 auto !important; 
+    min-height: 0; 
+    display: flex !important;
+    margin-bottom: 0 !important; /* Neutralizes global margins */
+}
+
+/* Makes the last tile (the button) stretch down to the bottom, just like the home page */
+#menu-5 .about-col-right > div:last-child {
+    flex-grow: 1 !important; 
+    flex-basis: auto !important;
+    max-height: 120px !important; /* Allows it to stretch enough to hit the floor */
+    margin-bottom: 0 !important; /* THE FIX: Kills the invisible margin pushing it up! */
+    background-image: url('../images/background_white.png') !important; 
+    background-size: 100% 100% !important;
+    background-position: center !important;
+    border-radius: 4px;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+}
+
+/* Ensures the link container fills the stretched space */
+#menu-5 .about-col-right > div:last-child .nick_link {
+    flex-grow: 1 !important;
+    height: 100% !important; 
+    width: 100% !important; 
+    min-height: 0 !important; 
+    padding: 0 !important;    
+    display: flex !important; 
+    align-items: center !important; 
+    justify-content: center !important;
+    margin: 0 !important;
+}
+
+/* Keeps text perfectly centered inside the stretched button */
+#menu-5 .about-back-btn .nick_link a {
+    height: 100% !important; 
+    width: 100% !important; 
+    display: flex !important; 
+    align-items: center !important; 
+    justify-content: center !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-family: 'Dancing Script', cursive !important;
+    
+    /* THE FIX: Smaller max-size on desktop, and changed color to Black */
+    font-size: clamp(1.2rem, 2vw, 1.6rem) !important; 
+    color: #000000 !important; 
+    text-shadow: none !important; /* Removes any leftover white glow */
+}
+
+/* =====================================================================
+   CONTACT SECTION: STRICT VIEWPORT MASONRY GRID
+===================================================================== */
+#menu-6 {
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden !important; 
+    padding-top: 85px; 
+    padding-bottom: 20px; 
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#menu-6 .contact-fullscreen-container {
+    height: 100%;
+    max-height: 85vh; 
+    width: 100%;
+    max-width: 1140px;
+    margin: 0 auto;
+}
+
+#menu-6 .contact-masonry-row {
+    height: 100%;
+    display: flex;
+    flex-direction: row !important;
+    align-items: stretch;
+    margin: 0;
+    gap: 15px; 
+}
+
+#menu-6 .contact-col-left,
+#menu-6 .contact-col-right {
+    width: calc(50% - 7.5px) !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex;
+    flex-direction: column;
+    gap: 15px; 
+}
+
+/* --- LEFT COLUMN RATIOS --- */
+#menu-6 .contact-img-tall {
+    flex: 1; /* Stretches to fill space */
+    min-height: 0;
+    overflow: hidden;
+    border-radius: 4px;
+}
+#menu-6 .contact-img-tall img {
+    height: 100%; width: 100%; object-fit: cover;
+}
+
+#menu-6 .contact-social-tile {
+    flex: 0 0 25%; /* Short tile at the bottom */
+    background: #D1B200;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+#menu-6 .contact-social-tile h3 { color: #111; font-family: 'Dancing Script', cursive; margin: 0 0 10px 0; font-size: 2rem; }
+#menu-6 .social-icons a { color: #111; font-size: 1.5rem; margin: 0 10px; transition: transform 0.2s; }
+#menu-6 .social-icons a:hover { transform: scale(1.2); }
+
+/* --- RIGHT COLUMN RATIOS --- */
+#menu-6 .contact-info-tile {
+    flex: 0 0 25%; /* Short tile at the top */
+    background: #2a2a2a;
+    border-radius: 4px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#menu-6 .contact-info-tile h3 { color: #D1B200; font-family: 'Dancing Script', cursive; margin: 0 0 10px 0; font-size: 2rem; }
+#menu-6 .contact-info-tile p { color: #ccc; margin: 0; font-size: 1rem; }
+
+/* --- THE TEXTURED PAPER FORM TILE --- */
+#menu-6 .contact-form-tile.old-paper-form {
+    flex: 1;
+    /* Keeps ONLY your paper texture, stretching to fill the box */
+    background-image: url('../images/background_white.png') !important;
+    background-size: 100% 100% !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    
+    border-radius: 4px;
+    padding: 40px; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centers the fields perfectly vertically */
+    overflow-y: auto !important;
+    scrollbar-width: none;
+}
+
+#menu-6 .contact-form-tile.old-paper-form::-webkit-scrollbar { 
+    display: none; /* Chrome/Safari */
+}
+
+/* Remove the red margin line if it still exists */
+#menu-6 .contact-form-tile.old-paper-form::before {
+    display: none !important;
+}
+
+/* --- THE INVISIBLE HANDWRITTEN INPUTS --- */
+#menu-6 .nick-input,
+#menu-6 .nick-input:focus,
+#menu-6 .nick-input:active {
+    background-color: transparent !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important; 
+    border-radius: 0 !important;
+    
+    color: #111 !important; 
+    font-family: 'Dancing Script', cursive !important;
+    
+    /* THE FIX: Dynamically shrinks to 1.4rem on phones, maxes out at 2.2rem on desktops */
+    font-size: clamp(1.4rem, 4vw, 2.2rem) !important; 
+    
+    height: auto !important; 
+    margin-bottom: 20px !important; 
+    padding: 5px 0 !important; 
+    margin-bottom: clamp(10px, 2vh, 20px) !important;
+}
+
+#menu-6 textarea.nick-input {
+    height: 120px !important; 
+    resize: none !important;  
+    height: clamp(60px, 12vh, 120px) !important; 
+    flex-shrink: 1 !important;
+}
+
+/* Forces the placeholder text itself to use the cursive font */
+#menu-6 .nick-input::-webkit-input-placeholder { color: rgba(30, 30, 30, 0.6) !important; font-family: 'Dancing Script', cursive !important; }
+#menu-6 .nick-input::-moz-placeholder { color: rgba(30, 30, 30, 0.6) !important; font-family: 'Dancing Script', cursive !important; }
+#menu-6 .nick-input:-ms-input-placeholder { color: rgba(30, 30, 30, 0.6) !important; font-family: 'Dancing Script', cursive !important; }
+#menu-6 .nick-input::placeholder {
+    color: rgba(30, 30, 30, 0.6) !important; 
+    font-family: 'Dancing Script', cursive !important;
+    opacity: 1 !important; 
+}
+
+/* --- THE SUBMIT BUTTON --- */
+#menu-6 .nick-submit-btn {
+align-self: flex-end !important; /* Locks to the right */
+    margin-top: auto !important; /* Pushes the button perfectly to the floor of the form */
+    margin-bottom: 5px !important; 
+    width: auto !important; /* Prevents strange stretching on mobile */
+    flex-shrink: 0 !important; /* Protects the button from getting squished */
+    
+    background: transparent !important; 
+    border: 2px solid #333 !important; 
+    color: #333 !important; 
+    font-family: 'Dancing Script', cursive !important;
+    font-size: clamp(1.2rem, 3vw, 1.8rem) !important;
+    padding: 5px 30px !important;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+#menu-6 .nick-submit-btn:hover { 
+    background: #333 !important; 
+    color: #f4ebd8 !important; 
+    transform: rotate(-3deg); 
+}
+
+/* --- SMARTPHONE BUTTON ALIGNMENT FIX --- */
+@media (max-width: 767px) {
+    #menu-6 .nick-submit-btn {
+        margin-right: 15px !important; /* Pushes the button 15px to the left */
+    }
+    
+    /* Optional: Slightly reduce the paper's side padding on tiny screens to give the text more room */
+    #menu-6 .contact-form-tile.old-paper-form {
+        padding: 30px 20px !important; 
+    }
 }
